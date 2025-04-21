@@ -1,0 +1,21 @@
+#ifndef RENDERWINDOW_HPP_INCLUDED
+#define RENDERWINDOW_HPP_INCLUDED
+#pragma once
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <iostream>
+#include<vector>
+
+#include"Bird.hpp"
+#include"Background.hpp"
+#include"Pipe.hpp"
+#include"Score.hpp"
+#include"AnyThing.hpp"
+
+class RenderWindow
+{
+private:
+    SDL_Window* window;
+	SDL_Renderer* renderer;
+	SDL_Rect rect;

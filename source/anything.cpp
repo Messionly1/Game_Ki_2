@@ -1,0 +1,21 @@
+#include"AnyThing.hpp"
+
+Anything::Anything(float _srcX,float _srcY,float _dstX,float _dstY, SDL_Texture *_texture)
+{
+    x=_srcX;
+    y=_srcY;
+    dstX=_dstX;
+    dstY=_dstY;
+    texture=_texture;
+    currentFrame.x=0;
+    currentFrame.y=0;
+    SDL_QueryTexture(texture,NULL,NULL,&currentFrame.w,&currentFrame.h);
+}
+
+float Anything::getX() { return x; }
+float Anything::getY() { return y; }
+float Anything::getZ() { return z; }
+
+void Anything::setZ(float _z) { z = _z; }
+void Anything::setY(float _y) { y = _y; }
+void Anything::setX(float _x) { x = _x; }

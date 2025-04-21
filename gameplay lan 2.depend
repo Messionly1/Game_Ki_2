@@ -1,0 +1,186 @@
+# depslib dependency file v1.0
+1618540125 source:c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\renderwindow.cpp
+	"RenderWindow.hpp"
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+
+1616233856 c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\renderwindow.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	<vector>
+	"Bird.hpp"
+	"Background.hpp"
+	"Pipe.hpp"
+	"Score.hpp"
+	"AnyThing.hpp"
+
+1618541711 source:c:\users\shurikenger\desktop\sdl\gameplay lan 2\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	"source/RenderWindow.hpp"
+	<vector>
+
+1616561178 source:c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\background.cpp
+	"Background.hpp"
+
+1616252183 c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\background.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	<vector>
+
+1615475479 source:c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\base.cpp
+
+1616338150 c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\bird.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	"Pipe.hpp"
+	<math.h>
+	<vector>
+	<SDL_mixer.h>
+
+1616562938 source:c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\bird.cpp
+	"Bird.hpp"
+
+1618541749 source:c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\pipe.cpp
+	"Pipe.hpp"
+
+1618540778 c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\pipe.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	<vector>
+	<ctime>
+	<stdlib.h>
+	<random>
+	"Score.hpp"
+
+1616234309 source:c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\score.cpp
+	"Score.hpp"
+
+1616233311 c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\score.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<SDL_ttf.h>
+	<iostream>
+	<vector>
+
+1616168473 source:c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\anything.cpp
+	"AnyThing.hpp"
+
+1616168474 c:\users\shurikenger\desktop\sdl\gameplay lan 2\source\anything.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<vector>
+	<iostream>
+
+1745201932 source:c:\users\legion\onedrive\desktop\gameplay lan 2\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	"source/RenderWindow.hpp"
+	<vector>
+	"source/AnyThing.hpp"
+
+1745158881 c:\users\legion\onedrive\desktop\gameplay lan 2\source\renderwindow.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	<vector>
+	"Bird.hpp"
+	"Background.hpp"
+	"Pipe.hpp"
+	"Score.hpp"
+	"AnyThing.hpp"
+
+1745202655 c:\users\legion\onedrive\desktop\gameplay lan 2\source\bird.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	"Pipe.hpp"
+	<math.h>
+	<vector>
+	<SDL_mixer.h>
+
+1745158881 c:\users\legion\onedrive\desktop\gameplay lan 2\source\pipe.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	<vector>
+	<ctime>
+	<stdlib.h>
+	<random>
+	"Score.hpp"
+
+1745158881 c:\users\legion\onedrive\desktop\gameplay lan 2\source\score.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<SDL_ttf.h>
+	<iostream>
+	<vector>
+
+1745163371 c:\users\legion\onedrive\desktop\gameplay lan 2\source\background.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	<vector>
+
+1745201800 c:\users\legion\onedrive\desktop\gameplay lan 2\source\anything.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	<vector>
+	<iostream>
+
+1745200453 source:c:\users\legion\onedrive\desktop\gameplay lan 2\source\anything.cpp
+	"AnyThing.hpp"
+
+1745162316 source:c:\users\legion\onedrive\desktop\gameplay lan 2\source\background.cpp
+	"Background.hpp"
+
+1745158881 source:c:\users\legion\onedrive\desktop\gameplay lan 2\source\bird.cpp
+	"Bird.hpp"
+
+1745158881 source:c:\users\legion\onedrive\desktop\gameplay lan 2\source\pipe.cpp
+	"Pipe.hpp"
+
+1745158881 source:c:\users\legion\onedrive\desktop\gameplay lan 2\source\renderwindow.cpp
+	"RenderWindow.hpp"
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+
+1745158881 source:c:\users\legion\onedrive\desktop\gameplay lan 2\source\score.cpp
+	"Score.hpp"
+
+1745161469 source:c:\users\legion\onedrive\desktop\gameplay lan 2\source\audio.cpp
+	"audio.hpp"
+
+1745161487 c:\users\legion\onedrive\desktop\gameplay lan 2\source\audio.hpp
+	<SDL.h>
+	<SDL_mixer.h>
+	<string>
+	<iostream>
+
