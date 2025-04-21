@@ -19,3 +19,10 @@ private:
     SDL_Window* window;
 	SDL_Renderer* renderer;
 	SDL_Rect rect;
+public:
+    RenderWindow(const char* p_title, int p_w, int p_h);
+    SDL_Texture* loadTexture(const char* p_filePath);
+    void clear();
+    void display();
+    void cleanUp();
+    void render(float p_x, float p_y, SDL_Texture* p_tex);

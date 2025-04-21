@@ -20,3 +20,15 @@ private:
     SDL_Rect currentFrame;
     bool PipeScored=false;
     bool MovingPipe=true;
+public:
+    Pipe(float _x,float _y,std::vector<SDL_Texture*>_tex,float _space);
+    void update(int index);
+    float getX();
+    float getPipeSpace();
+    float getY();
+    int getWidth();
+    int getHeight();
+    void setX(float _x);
+    void setY(float _y);
+    int getSize();
+

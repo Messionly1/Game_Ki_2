@@ -16,3 +16,15 @@ private:
     int HighScore=0;
     TTF_Font* font;
     SDL_Color fontColor;
+public:
+    Score(float _x, float  _y,TTF_Font* _font,SDL_Color _fontColor);
+    float getX();
+    float getY();
+    int getWidth();
+    int getHeight();
+    void setHighScore();
+    int getHighScore();
+    int getScore();
+    void setScore(int _score);
+    void update();
+
