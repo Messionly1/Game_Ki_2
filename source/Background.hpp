@@ -14,3 +14,12 @@ private:
     SDL_Rect currentFrame;
     int x,y;
     Uint8 a=255,b=0;
+public:
+    Background(int _x,int _y,SDL_Texture *tex);
+    void setX(int _x);
+    int getX();
+    int getY();
+    int getW();
+    int getH();
+    SDL_Rect getCurrentFrame();
+

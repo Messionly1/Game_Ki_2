@@ -22,4 +22,19 @@ private:
     int TextureFrameUp = 1, TextureFrameDown = 2;
     int count = 0;
     Mix_Music* bgMusic = NULL;
+public:
+    Anything(float _srcX, float _srcY, float _dstX, float _dstY, SDL_Texture* _texture);
+
+    float getX();
+    float getY();
+    float getZ();
+    void setX(float _x);
+    void setY(float _y);
+    void setZ(float _z);
+
+    SDL_Rect getCurrentFrame();
+    int getWidth();
+    int getHeight();
+    int getCount();
+
 

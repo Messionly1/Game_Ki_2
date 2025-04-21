@@ -19,3 +19,10 @@ float Anything::getZ() { return z; }
 void Anything::setZ(float _z) { z = _z; }
 void Anything::setY(float _y) { y = _y; }
 void Anything::setX(float _x) { x = _x; }
+
+int Anything::getWidth() { return getCurrentFrame().w; }
+int Anything::getHeight() { return getCurrentFrame().h; }
+
+SDL_Rect Anything::getCurrentFrame() { return currentFrame; }
+SDL_Texture* Anything::getTex() { return texture; }
+

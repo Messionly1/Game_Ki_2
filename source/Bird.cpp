@@ -21,5 +21,22 @@ SDL_Texture * Bird::getTex(int index)
 {
     return tex[index];
 }
+int Bird::getImgIndex()//nao sửa mỗi hàm này thôi
+{
+    if (changeImg==12)
+    {
+        changeImg=0;
+    }
+    int ans= changeImg/4;
+    if (isDead()==ALIVE)
+    {
+        changeImg++;
+    }
+    return ans;
+}
+float Bird::getY()
+{
+    return y;
+}
 
 
