@@ -36,6 +36,14 @@ public:
     void jump();
     void update(Pipe &b1,Pipe &b2,bool mainScreen);
     SDL_Texture* getTex(int index);
+        int getImgIndex();
+    SDL_Rect getCurrentFrame();
+    int isDead();
+    void reset();
+    int getActtualScore();
+    float getAngle();
+    void setAngle(float _angle);
+
 
 
 

@@ -63,5 +63,28 @@ void Bird::jump()
     velocity=-9;
     angle=-30;
 }
+void Bird::update(Pipe &b1,Pipe &b2,bool mainScreen)
+{
+    if(mainScreen==true)
+    {
+        if (changeBirdDirectInMainScreen==40)
+        {
+            changeBirdDirectInMainScreen=0;
+        }
+        if (changeBirdDirectInMainScreen /10==0)
+        {
+            setY(getY()-1.75);
+        }
+        else if ( changeBirdDirectInMainScreen /10==1)
+        {
+            setY(getY()-1.75);
+        }
+        else
+        {
+            setY(getY()+1.75);
+        }
+        changeBirdDirectInMainScreen++;
+    }
+
 
 

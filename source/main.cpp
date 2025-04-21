@@ -97,5 +97,27 @@ int main(int argv, char** args)
         while(SDL_PollEvent(&e))
         {
 //Handle Events
+            if (e.type==SDL_QUIT)
+            {
+                isRunning=false;
+            }
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                int mouseX=0,mouseY=0;
+                SDL_GetMouseState(&mouseX,&mouseY);
+                if(mainScreen==true && e.button.button==SDL_BUTTON_LEFT  && SDL_GetTicks()>200 )
+                {
+                    mainScreen=false;
+                    player.jump();
+                    Mix_PlayChannel(-1,jumpSfx,0);
+                }
+                else {
+                        if(e.button.button==SDL_BUTTON_LEFT &&player.isDead()!=DEAD)
+                        {
+                            player.jump();
+                            Mix_PlayChannel(-1,jumpSfx,0);
+
+                        }
+
 
 

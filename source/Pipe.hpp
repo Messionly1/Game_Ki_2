@@ -34,4 +34,11 @@ public:
     SDL_Texture * getTex(int index);
     SDL_Rect getCurrentFrame();
     int  getPipeRandom(int  min_num, int  max_num);
+    void reset(Pipe &p1,Pipe &p2);
+    bool isScored();
+    void setPipeScored(bool s);
+    void setMovingPipe(bool s);
+    bool getMovingPipe();
+};
+#endif // PIPE_HPP_INCLUDED
 

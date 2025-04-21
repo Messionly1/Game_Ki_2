@@ -66,4 +66,26 @@ void Pipe::update(int index)
        setY(static_cast<float>(Pipe::getPipeRandom(-(320-30),512-90-30-(int)PipeSpace-320)));//30:dau pipe,90:base
    }
 }
+float Pipe::getPipeSpace()
+{
+    return PipeSpace;
+}
+int Pipe::getPipeRandom(int min_num, int max_num)
+{
+    srand(time(NULL));
+    int result;
+    PipeScored=false;
+    if(count%4==0)
+    {
+        result = (rand() % (max_num - min_num)) + min_num+20;
+    }
+    else if (count%4==1)
+    {
+        result = (rand() % (max_num - min_num)) + min_num-15;
+    }
+    else
+    {
+      result = (rand() % (max_num - min_num)) + min_num;
+    }
+    count++;
 
