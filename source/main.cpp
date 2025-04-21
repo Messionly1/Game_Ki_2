@@ -68,4 +68,34 @@ SDL_Color textColor ={255,255,255};
 int a;
 bool check=false,hitSFx =false,swooshSFx=false;
 Score playerScore(144-9,60,flappyFont,textColor);
+void reset()
+{
+    player.reset();
+    pipe1.reset(pipe1,pipe2);
+    ScoreBoard.reset();
+    MuchPain.reset();
+    mainScreen=true;
+    playerScore.reset();
+    blendBg.reset();
+    a=0;
+    check=false;
+    swooshSFx=false;
+
+}
+
+int main(int argv, char** args)
+{
+    SDL_Texture* dummyTexture = nullptr;
+    Anything any(0, 0, 0, 0, dummyTexture);
+    any.initAudio();
+
+    SDL_Event e;
+    bool isRunning =true;
+    while(isRunning)
+    {
+        window.clear();
+        while(SDL_PollEvent(&e))
+        {
+//Handle Events
+
 

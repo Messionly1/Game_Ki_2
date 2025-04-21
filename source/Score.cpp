@@ -32,3 +32,23 @@ void Score::setHighScore()
     if (score>HighScore)
     HighScore=score;
 }
+TTF_Font * Score::getFont()
+{
+    return font;
+}
+SDL_Color Score::getFontColor()
+{
+    return fontColor;
+}
+int Score::getScore()
+{
+    return score;
+}
+void Score::setScore(int _score)
+{
+    score=_score;
+}
+int Score::getCountingScore()
+{
+    return countingScore;
+}

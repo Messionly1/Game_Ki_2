@@ -26,3 +26,9 @@ public:
     void display();
     void cleanUp();
     void render(float p_x, float p_y, SDL_Texture* p_tex);
+    void renderBird(Bird &bird,int index);
+    void renderBackGround(Background &bg);
+    void renderPipe(Pipe &pipe);
+    void renderScore(Score &sc,Bird &b);
+    void renderMuchPain(Anything &thing);
+

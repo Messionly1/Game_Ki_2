@@ -31,4 +31,7 @@ public:
     void setX(float _x);
     void setY(float _y);
     int getSize();
+    SDL_Texture * getTex(int index);
+    SDL_Rect getCurrentFrame();
+    int  getPipeRandom(int  min_num, int  max_num);
 

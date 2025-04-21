@@ -56,6 +56,18 @@ SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
 
 	return texture;
 }
+ void RenderWindow::renderBird(Bird &bird,int index)
+{
+    SDL_Rect src;
+    src.x=bird.getCurrentFrame().x;
+    src.y=bird.getCurrentFrame().y;
+    src.w=bird.getCurrentFrame().w;
+    src.h=bird.getCurrentFrame().h;
+    SDL_Rect dst;
+    dst.x=bird.getX();
+    dst.y=bird.getY();
+    dst.w=bird.getCurrentFrame().w;
+    dst.h=bird.getCurrentFrame().h;
 
 
 

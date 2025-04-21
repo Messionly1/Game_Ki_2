@@ -37,3 +37,33 @@ int Pipe::getHeight()
 {
     return getCurrentFrame().h;
 }
+SDL_Texture * Pipe::getTex(int index)
+{
+    return tex[index];
+}
+SDL_Rect Pipe::getCurrentFrame()
+{
+    return currentFrame;
+}
+void Pipe::update(int index)
+{
+   if(getX()>-static_cast<float>(getWidth()))
+   {
+        setX(getX()+velocity);
+        if(getMovingPipe()==true&& index==1)
+        {
+            setY(getY()+0.9);
+            if (getY()>512-90-30-(int)PipeSpace-320)
+            {
+                setY(512-90-30-(int)PipeSpace-320);
+            }
+        }
+   }
+   else
+   {
+       setMovingPipe(false);
+       setX(340-52);
+       setY(static_cast<float>(Pipe::getPipeRandom(-(320-30),512-90-30-(int)PipeSpace-320)));//30:dau pipe,90:base
+   }
+}
+

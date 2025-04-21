@@ -28,3 +28,12 @@ public:
     void setScore(int _score);
     void update();
 
+    TTF_Font* getFont();
+    SDL_Color getFontColor();
+    int getCountingScore();
+    void setCountingScore(int x);
+    void reset();
+};
+
+#endif // SCORE_HPP_INCLUDED
+
