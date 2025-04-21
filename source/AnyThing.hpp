@@ -36,5 +36,8 @@ public:
     int getWidth();
     int getHeight();
     int getCount();
+    void updateScoreBoard();
+    void updateMuchPain();
+
 
 

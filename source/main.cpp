@@ -55,3 +55,17 @@ bool init()
 
     return true;
 }
+bool load =init();
+bool mainScreen=true;
+Anything ScoreBoard(288/2-226/2,512,288/2-226/2,512-90-114-130,things[2]),MuchPain(288/2-186/2,55,288/2-186/2,80,things[4]);
+
+Bird player(50,512/2-18,bird);
+Background bg1(0,0,city),bg2(288,0,city),blendBg(0,0,things[7]);
+Background base1(0,512-90,ground),base2(288,512-90,ground);
+Pipe pipe1(288,-220,p,112),pipe2(288+170,-90,p,112);
+TTF_Font* flappyFont =TTF_OpenFont("asset/fBirdFont.ttf",28);
+SDL_Color textColor ={255,255,255};
+int a;
+bool check=false,hitSFx =false,swooshSFx=false;
+Score playerScore(144-9,60,flappyFont,textColor);
+

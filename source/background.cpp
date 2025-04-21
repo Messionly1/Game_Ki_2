@@ -33,3 +33,12 @@ int Background::getH()
 {
     return getCurrentFrame().h;
 }
+void Background::updateMainBg()
+{
+    if(Background::getX()==-288)
+    {
+        Background::setX(288);
+    }
+    Background::setX(Background::getX()-1);
+}
+

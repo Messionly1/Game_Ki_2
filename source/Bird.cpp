@@ -38,5 +38,30 @@ float Bird::getY()
 {
     return y;
 }
+float Bird::getX()
+{
+    return x;
+}
+void Bird::setY(float _y)
+{
+   y=_y;
+}
+void Bird::setX(float _x)
+{
+   x=_x;
+}
+float Bird::getAngle()
+{
+    return angle;
+}
+void Bird::setAngle(float _angle)
+{
+    angle=_angle;
+}
+void Bird::jump()
+{
+    velocity=-9;
+    angle=-30;
+}
 
 

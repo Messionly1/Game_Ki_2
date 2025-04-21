@@ -22,4 +22,7 @@ public:
     int getW();
     int getH();
     SDL_Rect getCurrentFrame();
+    void updateMainBg();
+    void updateBase();
+
 

@@ -25,5 +25,17 @@ private:
     std::    vector<SDL_Texture*>tex;
     int playerStatus=ALIVE;
     bool SplashWhenDie=false;
+public:
+    Bird(float _x,float _y,std::vector<SDL_Texture*>_tex);
+    float getX();
+    float getY();
+    int getHeight();
+    int getWidth();
+    void setY(float _y );
+    void  setX(float _x);
+    void jump();
+    void update(Pipe &b1,Pipe &b2,bool mainScreen);
+    SDL_Texture* getTex(int index);
+
 
 

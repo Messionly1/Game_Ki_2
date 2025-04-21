@@ -25,4 +25,21 @@ int Anything::getHeight() { return getCurrentFrame().h; }
 
 SDL_Rect Anything::getCurrentFrame() { return currentFrame; }
 SDL_Texture* Anything::getTex() { return texture; }
+void Anything::updateScoreBoard()
+{
+    if (getY() > dstY && count > 11)
+    {
+        if (getY() < 512 - 67 * 4)
+        {
+            ScoreBoardVelocity -= 7;
+        }
+        setY(getY() + ScoreBoardVelocity);
+    }
+    else if (getY() <= dstY)
+    {
+        setY(dstY);
+        ScoreBoardVelocity = 0;
+    }
+    count++;
+}
 
