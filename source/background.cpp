@@ -17,10 +17,19 @@ int Background::getY()
 {
     return y;
 }
+int Background::getZ()
+{
+    return z;
+}
 void Background::setX(int _x)
 {
     x=_x;
 }
+void Background::setZ(int_z)
+{
+    z=_z;
+}
+
 SDL_Rect Background:: getCurrentFrame()
 {
     return currentFrame;
@@ -35,9 +44,9 @@ int Background::getH()
 }
 void Background::updateMainBg()
 {
-    if(Background::getX()==-288)
+    if(Background::getX()==-512)
     {
-        Background::setX(288);
+        Background::setX(512);
     }
     Background::setX(Background::getX()-1);
 }
