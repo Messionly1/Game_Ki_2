@@ -38,6 +38,14 @@ public:
     int getCount();
     void updateScoreBoard();
     void updateMuchPain();
+        bool isInDst();
+    SDL_Texture* getTex();
+    void reset();
+
+    void initAudio();
+    void cleanAudio();
+};
+
 
 
 

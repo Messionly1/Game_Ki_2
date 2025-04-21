@@ -42,4 +42,21 @@ void Anything::updateScoreBoard()
     }
     count++;
 }
+void Anything::updateMuchPain()
+{
+    if (getY() < dstY && count > 4)
+    {
+        if (getY() > 70)
+        {
+            MuchPainVelocity -= 0.7;
+        }
+        setY(getY() + MuchPainVelocity);
+    }
+    else if (getY() >= dstY)
+    {
+        setY(dstY);
+        MuchPainVelocity = 0;
+    }
+    count++;
+}
 

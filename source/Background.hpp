@@ -24,5 +24,12 @@ public:
     SDL_Rect getCurrentFrame();
     void updateMainBg();
     void updateBase();
+    void updateBlendingLight();
+    void updateBlendingDark();
+    SDL_Texture* getTex();
+    void reset();
+};
+
+#endif // BACKGROUND_HPP_INCLUDED
 
 
