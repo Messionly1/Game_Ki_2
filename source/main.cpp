@@ -118,6 +118,32 @@ int main(int argv, char** args)
                             Mix_PlayChannel(-1,jumpSfx,0);
 
                         }
+                        if (e.button.button==SDL_BUTTON_LEFT&& (mouseX>288/2-104/2 && mouseX<288/2-104/2+104)&&(mouseY>512-90-130+30 &&mouseY<512-90-130+30+58)&&player.isDead()==DEAD && MuchPain.getCount()>30+playerScore.getScore()*3)
+                        {
+                            check=true;
+                            a =MuchPain.getCount();
+                        }
+                }
+            }
+        }
+//Update Screen
+if(mainScreen)
+        {
+            if (swooshSFx==false)
+            {
+                swooshSFx=true;
+                Mix_PlayChannel(-1,swooshSfx,0);
+            }
+            pipe1.reset(pipe1,pipe2);
+            blendBg.updateBlendingLight();
+            player.setX(120);
+            player.setY(512/2-18);
+            player.update(pipe1,pipe2,mainScreen);
+            bg1.updateMainBg();
+            bg2.updateMainBg();
+            base1.updateBase();
+            base2.updateBase();
+        }
 
 
 
