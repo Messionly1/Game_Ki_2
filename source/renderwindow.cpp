@@ -86,6 +86,27 @@ void RenderWindow::renderBackGround(Background &bg)
     SDL_RenderCopy(RenderWindow::renderer,bg.getTex(),&src,&dst);
 
 }
+void RenderWindow::renderPipe(Pipe &pipe)
+{
+     SDL_Rect src;
+    src.x=pipe.getCurrentFrame().x;
+    src.y=pipe.getCurrentFrame().y;
+    src.w=pipe.getCurrentFrame().w;
+    src.h=pipe.getCurrentFrame().h;
+    SDL_Rect dst;
+    dst.x=pipe.getX();
+    dst.y=pipe.getY();
+    dst.w=pipe.getCurrentFrame().w;
+    dst.h= pipe.getCurrentFrame().h;
+    SDL_RenderCopy(RenderWindow::renderer,pipe.getTex(0),&src,&dst);
+    dst.x=pipe.getX();
+    dst.y=pipe.getY()+static_cast<float>(pipe.getHeight())+pipe.getPipeSpace();
+    dst.w=pipe.getCurrentFrame().w;
+    dst.h= pipe.getCurrentFrame().h;
+    SDL_RenderCopy(RenderWindow::renderer,pipe.getTex(1),&src,&dst);
+
+}
+
 
 
 
