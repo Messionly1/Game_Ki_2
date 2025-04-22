@@ -31,4 +31,11 @@ public:
     void renderPipe(Pipe &pipe);
     void renderScore(Score &sc,Bird &b);
     void renderMuchPain(Anything &thing);
+    void renderScoreBoard(Anything &thing);
+    void renderScoreWhenDie(Score &sc,Bird &b);
+    void renderHighScore(Score &sc,Bird &b);
+    SDL_Renderer *getRenderer();
+};
+
+#endif // RENDERWINDOW_HPP_INCLUDED
 

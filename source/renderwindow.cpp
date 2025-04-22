@@ -69,6 +69,24 @@ SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
     dst.w=bird.getCurrentFrame().w;
     dst.h=bird.getCurrentFrame().h;
 
+SDL_RenderCopyEx(RenderWindow::renderer,bird.getTex(index),&src,&dst,static_cast<double>(bird.getAngle()),NULL,SDL_FLIP_NONE);
+}
+void RenderWindow::renderBackGround(Background &bg)
+{
+    SDL_Rect src;
+    src.x=bg.getCurrentFrame().x;
+    src.y=bg.getCurrentFrame().y;
+    src.w=bg.getCurrentFrame().w;
+    src.h=bg.getCurrentFrame().h;
+    SDL_Rect dst;
+    dst.x=bg.getX();
+    dst.y=bg.getY();
+    dst.w=bg.getCurrentFrame().w;
+    dst.h=bg.getCurrentFrame().h;
+    SDL_RenderCopy(RenderWindow::renderer,bg.getTex(),&src,&dst);
+
+}
+
 
 
 

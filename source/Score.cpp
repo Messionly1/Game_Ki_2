@@ -52,3 +52,18 @@ int Score::getCountingScore()
 {
     return countingScore;
 }
+void Score::setCountingScore(int x)
+{
+    countingScore=x;
+}
+void Score::update()
+{
+    if (countingScore<getScore())
+    {
+        countingScore++;
+    }
+}
+void  Score::reset()
+{
+    countingScore=0;
+}
