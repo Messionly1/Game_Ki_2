@@ -72,5 +72,31 @@ void Anything::reset()
     }
     else setY(512);
 }
+int Anything::getCount() { return count; }
+
+void Anything::initAudio() {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        SDL_Log("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+        return;
+    }
+
+    bgMusic = Mix_LoadMUS("asset/music.wav");
+    if (!bgMusic) {
+        SDL_Log("Failed to load background music! SDL_mixer Error: %s\n", Mix_GetError());
+    } else {
+        Mix_PlayMusic(bgMusic, -1); // -1 để lặp vô hạn
+        Mix_VolumeMusic(MIX_MAX_VOLUME / 2); // âm lượng vừa phải
+    }
+}
+
+void Anything::cleanAudio() {
+    if (bgMusic) {
+        Mix_HaltMusic();
+        Mix_FreeMusic(bgMusic);
+        bgMusic = nullptr;
+    }
+    Mix_CloseAudio();
+}
+
 
 

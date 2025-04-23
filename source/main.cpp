@@ -144,6 +144,35 @@ if(mainScreen)
             base1.updateBase();
             base2.updateBase();
         }
+        else
+        {
+            if(player.isDead()!=DEAD)
+            {
+                pipe1.update(1);
+                pipe2.update(2);
+                bg1.updateMainBg();
+                bg2.updateMainBg();
+                base1.updateBase();
+                base2.updateBase();
+            }
+            else if (player.getY()==512-90-(float)player.getWidth()+6)
+            {
+                  int mouseX=0,mouseY=0;
+                SDL_GetMouseState(&mouseX,&mouseY);
+
+                ScoreBoard.updateScoreBoard();
+                MuchPain.updateMuchPain();
+                if(MuchPain.getCount()>30 &&MuchPain.getCount()%3==1)
+                {
+                    playerScore.update();
+                }
+                if (check ==true)
+                {
+                    blendBg.updateBlendingDark();
+                }
+            }
+        }
+        player.update(pipe1,pipe2,mainScreen);
 
 
 
