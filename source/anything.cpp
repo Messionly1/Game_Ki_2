@@ -59,4 +59,18 @@ void Anything::updateMuchPain()
     }
     count++;
 }
+bool Anything::isInDst() { return inDst; }
+
+void Anything::reset()
+{
+    count = 0;
+    ScoreBoardVelocity = -24;
+    MuchPainVelocity = 4;
+    if (getY() < 100)
+    {
+        setY(55);
+    }
+    else setY(512);
+}
+
 

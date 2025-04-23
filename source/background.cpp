@@ -56,4 +56,27 @@ SDL_Texture* Background::getTex()
 {
    return texture;
 }
+void Background::updateBlendingDark()
+{
+    if(b+19>255)
+    {
+        b=255;
+    }
+    else b+=19;
+    SDL_SetTextureAlphaMod(texture,b);
 
+}
+void Background::updateBlendingLight()
+{
+    if(a-19<0)
+    {
+        a=0;
+    }
+    else a-=19;
+    SDL_SetTextureAlphaMod(texture,a);
+}
+void Background::reset()
+{
+    a=255;
+    b=0;
+}

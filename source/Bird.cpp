@@ -85,6 +85,30 @@ void Bird::update(Pipe &b1,Pipe &b2,bool mainScreen)
         }
         changeBirdDirectInMainScreen++;
     }
+    else
+    {
+        if (velocity>=0)
+        {
+            if (getAngle()<90)
+            {
+                if (getAngle()>=-30 &&getAngle()<-27)
+                {
+                    setAngle(getAngle()+0.55);
+                }
+                else{
+                    setAngle(getAngle()+8.35);
+                }
+            }
+            else
+            {
+                setAngle(90);
+            }
+        }
+        if (getTopRightY(angle)<512-90-1 && getBottomRightY(angle)<512-90-1 )//con chim thua 2 px o cuoi
+        {
+            setY(getY()+velocity);
+            velocity+=GRAVITY;
 
+        }
 
 
