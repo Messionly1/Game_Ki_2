@@ -43,6 +43,19 @@ public:
     int getActtualScore();
     float getAngle();
     void setAngle(float _angle);
+    bool checkSplashWhenDie();
+    void setCheckSplash(bool s);
+    float getTopRightX(float a);
+    float getTopRightY(float a);
+    float getTopLeftX(float a);
+    float getTopLeftY(float a);
+    float getBottomLeftX(float a);
+    float getBottomLeftY(float a);
+    float getBottomRightX(float a);
+    float getBottomRightY(float a);
+};
+#endif // BIRD_HPP_INCLUDED
+
 
 
 
