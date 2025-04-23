@@ -106,7 +106,28 @@ void RenderWindow::renderPipe(Pipe &pipe)
     SDL_RenderCopy(RenderWindow::renderer,pipe.getTex(1),&src,&dst);
 
 }
+void RenderWindow::renderScore(Score &sc,Bird &b)
+{
+    sc.setScore(b.getActtualScore());
+    sc.setHighScore();
+    std::string s=std::to_string(sc.getScore());
+    SDL_Surface* surfaceMessage = TTF_RenderText_Blended( sc.getFont(), s.c_str(), sc.getFontColor());
+    SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    SDL_Rect src;
+		src.x = 0;
+		src.y = 0;
+		src.w = surfaceMessage->w;
+		src.h = surfaceMessage->h;
 
+		SDL_Rect dst;
+		dst.x = sc.getX();
+		dst.y = sc.getY();
+		dst.w = src.w;
+		dst.h = src.h;
+
+		SDL_RenderCopy(renderer, message, &src, &dst);
+		SDL_FreeSurface(surfaceMessage);
+}
 
 
 

@@ -88,4 +88,36 @@ int Pipe::getPipeRandom(int min_num, int max_num)
       result = (rand() % (max_num - min_num)) + min_num;
     }
     count++;
+    if ( count%2==1)
+    {
+        setMovingPipe(true);
+        std:: cout<<"Moving"<<std::endl;
+    }
 
+    return result;
+}
+void Pipe::reset(Pipe &p1,Pipe &p2)
+{
+    p1.setX(288);
+    p1.setY(-220);
+    p2.setX(288+170);
+    p2.setY(-90);
+    PipeScored=false;
+    MovingPipe=true;
+}
+bool Pipe::isScored()
+{
+    return PipeScored;
+}
+void Pipe::setPipeScored(bool s)
+{
+    PipeScored=s;
+}
+void Pipe::setMovingPipe(bool s)
+{
+    MovingPipe=s;
+}
+bool Pipe::getMovingPipe()
+{
+    return MovingPipe;
+}
