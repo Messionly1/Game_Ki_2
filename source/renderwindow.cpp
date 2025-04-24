@@ -128,6 +128,81 @@ void RenderWindow::renderScore(Score &sc,Bird &b)
 		SDL_RenderCopy(renderer, message, &src, &dst);
 		SDL_FreeSurface(surfaceMessage);
 }
+void RenderWindow::renderHighScore(Score &sc,Bird &b)
+{
+    std::string s=std::to_string(sc.getHighScore());
+    SDL_Surface* surfaceMessage = TTF_RenderText_Blended( sc.getFont(), s.c_str(), sc.getFontColor());
+    SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    SDL_Rect src;
+    	src.x = 0;
+		src.y = 0;
+		src.w = surfaceMessage->w;
+		src.h = surfaceMessage->h;
+
+		SDL_Rect dst;
+		dst.x = 236-src.w;
+		dst.y = 178+76-3;//178+76
+		dst.w = src.w;
+		dst.h = src.h;
+
+		SDL_RenderCopy(renderer, message, &src, &dst);
+		SDL_FreeSurface(surfaceMessage);
+}
+void RenderWindow::renderScoreWhenDie(Score &sc,Bird &b)
+{
+    std::string s=std::to_string(sc.getCountingScore());
+    SDL_Surface* surfaceMessage = TTF_RenderText_Blended( sc.getFont(), s.c_str(), sc.getFontColor());
+    SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    SDL_Rect src;
+		src.x = 0;
+		src.y = 0;
+		src.w = surfaceMessage->w;
+		src.h = surfaceMessage->h;
+
+		SDL_Rect dst;
+		dst.x = 236-src.w;
+		dst.y = 208;//178+76
+		dst.w = src.w;
+		dst.h = src.h;
+
+		SDL_RenderCopy(renderer, message, &src, &dst);
+		SDL_FreeSurface(surfaceMessage);
+}
+void RenderWindow::renderMuchPain(Anything &thing )
+{
+    if(thing.getCount()>4)
+    {
+        SDL_Rect src;
+        src.x=thing.getCurrentFrame().x;
+        src.y=thing.getCurrentFrame().y;
+        src.w=thing.getCurrentFrame().w;
+        src.h=thing.getCurrentFrame().h;
+        SDL_Rect dst;
+        dst.x=thing.getX();
+        dst.y=thing.getY();
+        dst.w=thing.getCurrentFrame().w;
+        dst.h=thing.getCurrentFrame().h;
+        SDL_RenderCopy(renderer,thing.getTex(),&src,&dst);
+    }
+}
+void RenderWindow::renderScoreBoard(Anything &thing)
+{
+    if(thing.getCount()>11)
+    {
+        SDL_Rect src;
+        src.x=thing.getCurrentFrame().x;
+        src.y=thing.getCurrentFrame().y;
+        src.w=thing.getCurrentFrame().w;
+        src.h=thing.getCurrentFrame().h;
+        SDL_Rect dst;
+        dst.x=thing.getX();
+        dst.y=thing.getY();
+        dst.w=thing.getCurrentFrame().w;
+        dst.h=thing.getCurrentFrame().h;
+        SDL_RenderCopy(renderer,thing.getTex(),&src,&dst);
+    }
+}
+
 
 
 

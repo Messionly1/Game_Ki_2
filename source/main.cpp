@@ -173,6 +173,55 @@ if(mainScreen)
             }
         }
         player.update(pipe1,pipe2,mainScreen);
+        //Render Screen
+        if(mainScreen)
+        {
+            window.renderBackGround(bg1);
+            window.renderBackGround(bg2);
+            window.renderPipe(pipe1);
+            window.renderPipe(pipe2);
+            window.renderBackGround(base2);
+            window.renderBackGround(base1);
+            window.renderBird(player,player.getImgIndex());
+            window.render(288/2-114/2-5,290,things[0]);
+            window.render(288/2-184/2,49+35,things[3]);
+            window.renderBackGround(blendBg);
+
+        }
+        else
+        {
+            if (player.isDead()==ALIVE)
+            {
+                window.renderBackGround(bg1);
+                window.renderBackGround(bg2);
+                window.renderPipe(pipe1);
+                window.renderPipe(pipe2);
+                window.renderBackGround(base2);
+                window.renderBackGround(base1);
+                window.renderScore(playerScore,player);
+                window.renderBird(player,player.getImgIndex());
+            }
+            else if (player.isDead()==DEAD  )
+            {
+                window.renderBackGround(bg1);
+                window.renderBackGround(bg2);
+                window.renderPipe(pipe1);
+                window.renderPipe(pipe2);
+                window.renderBackGround(base2);
+                window.renderBackGround(base1);
+                window.renderBird(player,player.getImgIndex());
+                if (player.checkSplashWhenDie()==false)
+                    {
+                        Mix_PlayChannel(-1,hitSfx,0);
+
+                        player.setCheckSplash(true);
+                        window.render(0,0,things[1]);
+                        window.display();
+                        SDL_Delay(60);
+                        continue;
+
+                    }
+
 
 
 
