@@ -5,6 +5,7 @@
 #include<SDL_mixer.h>
 #include"source/RenderWindow.hpp"
 #include<vector>
+#include<"source/Anything.hpp"">
 
 using namespace std;
 void gameLoop();
@@ -16,6 +17,7 @@ Mix_Chunk* hitSfx;
 Mix_Chunk * swooshSfx;
 Mix_Chunk *pointSfx;
 Mix_Chunk *dieSfx;
+Mix_Music* bgMusic;
 vector<SDL_Texture*> things;
 
 vector<SDL_Texture*> p;
@@ -221,6 +223,40 @@ if(mainScreen)
                         continue;
 
                     }
+                    if (player.getY()==512-90-(float)player.getWidth()+6)
+                    {
+                    if (MuchPain.getCount()>30+playerScore.getScore()*3)
+                    {
+                         window.render(288/2-104/2,512-90-130+30,things[5]);//4+4+3+14
+                    }
+                      window.renderScoreBoard(ScoreBoard);
+                      window.renderMuchPain(MuchPain);
+                       if (MuchPain.getCount()>30)
+                    {
+                        window.renderScoreWhenDie(playerScore,player);
+                        window.renderHighScore(playerScore,player);
+                    }
+                    window.renderBackGround(blendBg);
+                    }
+            }
+        }
+//Display Screen
+        window.display();
+//Reset
+        if (MuchPain.getCount()>a+13 && check==true )
+        {
+            reset();
+        }
+        SDL_Delay(22.5);
+    }
+    any.cleanAudio();
+    return 0;
+}
+void gameLoop()
+{
+
+}
+
 
 
 

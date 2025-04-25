@@ -45,7 +45,7 @@ public:
     void initAudio();
     void cleanAudio();
 };
-
+#endif // BASE_HPP_INCLUDED
 
 
 
