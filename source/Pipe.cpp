@@ -1,7 +1,8 @@
 #include"Pipe.hpp"
+
 Pipe::Pipe(float _x,float _y,std::vector<SDL_Texture*>_tex,float _space)
 {
-    x=_y;
+    x=_x;
     y=_y;
     currentFrame.x=0;
     currentFrame.y=0;
@@ -74,28 +75,20 @@ int Pipe::getPipeRandom(int min_num, int max_num)
 {
     srand(time(NULL));
     int result;
-    PipeScored=false;
-    if(count%4==0)
-    {
-        result = (rand() % (max_num - min_num)) + min_num+20;
-    }
-    else if (count%4==1)
-    {
-        result = (rand() % (max_num - min_num)) + min_num-15;
-    }
-    else
-    {
-      result = (rand() % (max_num - min_num)) + min_num;
-    }
+    PipeScored = false;
+
+    // Không còn random thêm ±20 hay -15 nữa.
+    result = (rand() % (max_num - min_num)) + min_num;
+
     count++;
-    if ( count%2==1)
-    {
-        setMovingPipe(true);
-        std:: cout<<"Moving"<<std::endl;
-    }
+
+    // <<< Luôn luôn cho phép pipe di chuyển >>>
+    setMovingPipe(true);
 
     return result;
 }
+
+
 void Pipe::reset(Pipe &p1,Pipe &p2)
 {
     p1.setX(288);

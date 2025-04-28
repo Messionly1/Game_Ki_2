@@ -13,7 +13,7 @@ private:
     SDL_Texture *texture;
     SDL_Rect currentFrame;
     int x,y;
-    Uint8 a=255,b=0;
+    Uint8 a=255,b=0; //unsigned char
 public:
     Background(int _x,int _y,SDL_Texture *tex);
     void setX(int _x);

@@ -88,7 +88,7 @@ void RenderWindow::renderBackGround(Background &bg)
 }
 void RenderWindow::renderPipe(Pipe &pipe)
 {
-     SDL_Rect src;
+        SDL_Rect src;
     src.x=pipe.getCurrentFrame().x;
     src.y=pipe.getCurrentFrame().y;
     src.w=pipe.getCurrentFrame().w;

@@ -15,11 +15,11 @@ class Pipe
 private:
     float x,y,PipeSpace,velocity=-3;
     int count =0;
-
     std::vector<SDL_Texture*>tex;
     SDL_Rect currentFrame;
     bool PipeScored=false;
     bool MovingPipe=true;
+
 public:
     Pipe(float _x,float _y,std::vector<SDL_Texture*>_tex,float _space);
     void update(int index);
@@ -39,6 +39,14 @@ public:
     void setPipeScored(bool s);
     void setMovingPipe(bool s);
     bool getMovingPipe();
+
+    void updateAlpha();
+    int getAlpha();
+    void setFading(bool f);
+    void setFadeIn(bool f);
+    bool isFading();
+
+
 };
 #endif // PIPE_HPP_INCLUDED
 
