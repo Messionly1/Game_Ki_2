@@ -38,7 +38,7 @@ public:
     int getCount();
     void updateScoreBoard();
     void updateMuchPain();
-        bool isInDst();
+    bool isInDst();
     SDL_Texture* getTex();
     void reset();
 

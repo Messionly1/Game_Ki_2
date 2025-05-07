@@ -23,6 +23,7 @@ void Anything::setX(float _x) { x = _x; }
 int Anything::getWidth() { return getCurrentFrame().w; }
 int Anything::getHeight() { return getCurrentFrame().h; }
 
+
 SDL_Rect Anything::getCurrentFrame() { return currentFrame; }
 SDL_Texture* Anything::getTex() { return texture; }
 void Anything::updateScoreBoard()
@@ -97,6 +98,7 @@ void Anything::cleanAudio() {
     }
     Mix_CloseAudio();
 }
+
 
 
 
