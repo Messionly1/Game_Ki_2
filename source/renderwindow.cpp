@@ -53,7 +53,6 @@ SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
 
 	if (texture == NULL)
 		std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
-
 	return texture;
 }
  void RenderWindow::renderBird(Bird &bird,int index)
@@ -88,7 +87,7 @@ void RenderWindow::renderBackGround(Background &bg)
 }
 void RenderWindow::renderPipe(Pipe &pipe)
 {
-        SDL_Rect src;
+    SDL_Rect src;
     src.x=pipe.getCurrentFrame().x;
     src.y=pipe.getCurrentFrame().y;
     src.w=pipe.getCurrentFrame().w;
@@ -141,7 +140,7 @@ void RenderWindow::renderHighScore(Score &sc,Bird &b)
 
 		SDL_Rect dst;
 		dst.x = 236-src.w;
-		dst.y = 178+76-3;//178+76
+		dst.y = 178+76-3;
 		dst.w = src.w;
 		dst.h = src.h;
 
@@ -161,7 +160,7 @@ void RenderWindow::renderScoreWhenDie(Score &sc,Bird &b)
 
 		SDL_Rect dst;
 		dst.x = 236-src.w;
-		dst.y = 208;//178+76
+		dst.y = 208; //178+76
 		dst.w = src.w;
 		dst.h = src.h;
 

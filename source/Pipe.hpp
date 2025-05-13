@@ -19,6 +19,7 @@ private:
     SDL_Rect currentFrame;
     bool PipeScored=false;
     bool MovingPipe=true;
+    int moveDirection;
 
 public:
     Pipe(float _x,float _y,std::vector<SDL_Texture*>_tex,float _space);
@@ -45,7 +46,10 @@ public:
     void setFading(bool f);
     void setFadeIn(bool f);
     bool isFading();
-
+    void setMoveDirection(int dir) { moveDirection = dir; }
+    int getMoveDirection() const { return moveDirection; }
+    bool isScored() const { return PipeScored; }
+    void setScored(bool scored) { PipeScored = scored; }
 
 };
 #endif // PIPE_HPP_INCLUDED

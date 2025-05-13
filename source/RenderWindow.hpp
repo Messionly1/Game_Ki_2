@@ -6,7 +6,6 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include<vector>
-
 #include"Bird.hpp"
 #include"Background.hpp"
 #include"Pipe.hpp"

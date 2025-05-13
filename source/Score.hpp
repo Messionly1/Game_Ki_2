@@ -33,6 +33,9 @@ public:
     int getCountingScore();
     void setCountingScore(int x);
     void reset();
+
+    void addPoint();
+
 };
 
 #endif // SCORE_HPP_INCLUDED

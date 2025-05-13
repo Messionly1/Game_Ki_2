@@ -13,6 +13,7 @@ const float GRAVITY=0.8;
 const int DEAD=1,ALIVE=0,PLAYING=2;
 const bool TRUE=true;
 const float PI= 3.14159265;
+const int LIVE_CAP = 3;
 class Bird
 {
 private:
@@ -25,6 +26,8 @@ private:
     std::    vector<SDL_Texture*>tex;
     int playerStatus=ALIVE;
     bool SplashWhenDie=false;
+    int lives = LIVE_CAP;
+
 public:
     Bird(float _x,float _y,std::vector<SDL_Texture*>_tex);
     float getX();
@@ -38,7 +41,7 @@ public:
     SDL_Texture* getTex(int index);
         int getImgIndex();
     SDL_Rect getCurrentFrame();
-    int isDead();
+    bool isDead();
     void reset();
     int getActtualScore();
     float getAngle();
@@ -53,6 +56,10 @@ public:
     float getBottomLeftY(float a);
     float getBottomRightX(float a);
     float getBottomRightY(float a);
+
+    void resetNearestPipes(Pipe& p1, Pipe& p2, float birdX);
+
+    void respawn();
 };
 #endif // BIRD_HPP_INCLUDED
 

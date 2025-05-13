@@ -21,7 +21,7 @@ SDL_Texture * Bird::getTex(int index)
 {
     return tex[index];
 }
-int Bird::getImgIndex()//nao sửa mỗi hàm này thôi
+int Bird::getImgIndex() //animation bird
 {
     if (changeImg==12)
     {
@@ -67,7 +67,7 @@ void Bird::update(Pipe &b1,Pipe &b2,bool mainScreen)
 {
     if(mainScreen==true)
     {
-        if (changeBirdDirectInMainScreen==40)
+        if (changeBirdDirectInMainScreen==40) //0-19 fr^,20-39 fr v
         {
             changeBirdDirectInMainScreen=0;
         }
@@ -104,7 +104,7 @@ void Bird::update(Pipe &b1,Pipe &b2,bool mainScreen)
                 setAngle(90);
             }
         }
-        if (getTopRightY(angle)<512-90-1 && getBottomRightY(angle)<512-90-1 )//con chim thua 2 px o cuoi
+        if (getTopRightY(angle)<512-90-1 && getBottomRightY(angle)<512-90-1 )//chim thua 2 px o cuoi
         {
             setY(getY()+velocity);
             velocity+=GRAVITY;
@@ -116,7 +116,7 @@ void Bird::update(Pipe &b1,Pipe &b2,bool mainScreen)
         }
 
         if ( (getTopRightX(angle)>b1.getX()+3||getBottomRightX(angle)>b1.getX()+5)
-                && (getBottomLeftX(angle)<b1.getX()+(float)b1.getWidth()-5||getTopLeftX(angle)<b1.getX()+(float)b1.getWidth()+5) )
+                && (getBottomLeftX(angle)<b1.getX()+(float)b1.getWidth()-5||getTopLeftX(angle)<b1.getX()+(float)b1.getWidth()+5) ) //chim dang nam trong vung chieu ngang cua ong
         {
 
             if (getTopRightY(angle)<b1.getY()+(float)b1.getHeight()+10|| getTopRightY(angle)>b1.getY()+(float)b1.getHeight()+(float)b1.getPipeSpace())
@@ -166,13 +166,15 @@ void Bird::update(Pipe &b1,Pipe &b2,bool mainScreen)
         }
     }
 }
+
+
 SDL_Rect Bird::getCurrentFrame()
 {
     return currentFrame;
 }
-int Bird::isDead()
+bool Bird::isDead()
 {
-    return playerStatus;
+    return playerStatus==DEAD;
 }
 void Bird::reset()
 {
@@ -180,7 +182,7 @@ void Bird::reset()
     playerStatus=ALIVE;
     ActtualScore=0;
     SplashWhenDie=false;
-    angle=0;
+    angle=0;  //
 }
 int Bird::getActtualScore()
 {
