@@ -55,7 +55,6 @@ SDL_Rect Pipe::getCurrentFrame()
 {
     return currentFrame;
 }
-
 void Pipe::update(int index)
 {
     if(getX() > -static_cast<float>(getWidth()))
