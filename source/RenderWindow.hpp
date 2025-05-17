@@ -33,7 +33,7 @@ public:
     void renderScoreBoard(Anything &thing);
     void renderScoreWhenDie(Score &sc,Bird &b);
     void renderHighScore(Score &sc,Bird &b);
-    void renderMedal(SDL_Texture* medalTexture, int score, int highScore);
+    void renderMedal(Anything &thing,SDL_Texture *medalTexture, int score, int highScore);
     SDL_Renderer *getRenderer();
 };
 
