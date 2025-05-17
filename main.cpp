@@ -252,24 +252,23 @@ else if (player.getY() == 512 - 90 - (float)player.getWidth() + 6)
                     }
                     if (player.getY()==512-90-(float)player.getWidth()+6)
                     {
-                   if (MuchPain.getCount()>30+playerScore.getScore()*3)
+                   if (MuchPain.getCount() > 30 + playerScore.getScore() * 3)
 {
-    window.render(288/2-104/2,512-90-130+30,things[5]);//4+4+3+14
+    window.render(288/2 - 104/2, 512 - 90 - 130 + 30, things[5]);
 }
+
 window.renderScoreBoard(ScoreBoard);
 window.renderMuchPain(MuchPain);
-if (MuchPain.getCount()>30)
+
+if (MuchPain.getCount() > 30)
 {
-    window.renderScoreWhenDie(playerScore,player);
-    window.renderHighScore(playerScore,player);
+    window.renderScoreWhenDie(playerScore, player);
+    window.renderHighScore(playerScore, player);
 
-    if (playerScore.getScore() > playerScore.getHighScore())
-    {
-        window.render(288/2 - 226/2 + 28, 512 - 90 - 130 + 46, things[8]);
-    }
+   window.renderMedal(ScoreBoard,things[8],playerScore.getCountingScore(),playerScore.getHighScore());
 }
-window.renderBackGround(blendBg);
 
+window.renderBackGround(blendBg);
                     }
             }
         }
