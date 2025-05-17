@@ -23,7 +23,6 @@ void Anything::setX(float _x) { x = _x; }
 int Anything::getWidth() { return getCurrentFrame().w; }
 int Anything::getHeight() { return getCurrentFrame().h; }
 
-
 SDL_Rect Anything::getCurrentFrame() { return currentFrame; }
 SDL_Texture* Anything::getTex() { return texture; }
 void Anything::updateScoreBoard()
@@ -85,8 +84,8 @@ void Anything::initAudio() {
     if (!bgMusic) {
         SDL_Log("Failed to load background music! SDL_mixer Error: %s\n", Mix_GetError());
     } else {
-        Mix_PlayMusic(bgMusic, -1); // -1 để lặp vô hạn
-        Mix_VolumeMusic(MIX_MAX_VOLUME / 2); // âm lượng vừa phải
+        Mix_PlayMusic(bgMusic, -1); //lặp vô hạn
+        Mix_VolumeMusic(MIX_MAX_VOLUME / 2); //vừa phải
     }
 }
 

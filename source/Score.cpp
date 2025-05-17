@@ -6,9 +6,9 @@ Score::Score(float _x, float _y, TTF_Font* _font, SDL_Color _fontColor)
     y = _y;
     font = _font;
     fontColor = _fontColor;
-    score = 0;          // Thêm dòng này để khởi tạo score
-    countingScore = 0;   // Thêm dòng này để khởi tạo countingScore
-    HighScore = 0;       // Thêm dòng này để khởi tạo HighScore
+    score = 0;
+    countingScore = 0;
+    HighScore = 0;
 }
 
 int Score::getHeight()
@@ -78,6 +78,6 @@ void Score::update()
 
 void Score::reset()
 {
-    score = 0;          // Reset điểm hiện tại về 0
-    countingScore = 0;   // Reset điểm đếm về 0
+    score = 0;
+    countingScore = 0;
 }

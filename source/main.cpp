@@ -221,7 +221,6 @@ if(mainScreen)
                         window.display();
                         SDL_Delay(60);
                         continue;
-
                     }
                     if (player.getY()==512-90-(float)player.getWidth()+6)
                     {

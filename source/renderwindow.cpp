@@ -186,22 +186,37 @@ void RenderWindow::renderMuchPain(Anything &thing )
 }
 void RenderWindow::renderScoreBoard(Anything &thing)
 {
-    if(thing.getCount()>11)
+    if (thing.getCount() > 11)
     {
         SDL_Rect src;
-        src.x=thing.getCurrentFrame().x;
-        src.y=thing.getCurrentFrame().y;
-        src.w=thing.getCurrentFrame().w;
-        src.h=thing.getCurrentFrame().h;
+        src.x = thing.getCurrentFrame().x;
+        src.y = thing.getCurrentFrame().y;
+        src.w = thing.getCurrentFrame().w;
+        src.h = thing.getCurrentFrame().h;
         SDL_Rect dst;
-        dst.x=thing.getX();
-        dst.y=thing.getY();
-        dst.w=thing.getCurrentFrame().w;
-        dst.h=thing.getCurrentFrame().h;
-        SDL_RenderCopy(renderer,thing.getTex(),&src,&dst);
+        dst.x = thing.getX();
+        dst.y = thing.getY();
+        dst.w = thing.getCurrentFrame().w;
+        dst.h = thing.getCurrentFrame().h;
+        SDL_RenderCopy(renderer, thing.getTex(), &src, &dst);
     }
 }
+void RenderWindow::renderMedal(SDL_Texture* medalTexture, int score, int highScore) {
+    if (score > highScore) {
+        SDL_Rect src;
+        src.x = 0;
+        src.y = 0;
+        SDL_QueryTexture(medalTexture, NULL, NULL, &src.w, &src.h);
 
+        SDL_Rect dst;
+        dst.x = 288 / 2 - 226 / 2 + 28;
+        dst.y = 512 - 90 - 130 + 46;
+        dst.w = src.w;
+        dst.h = src.h;
+
+        SDL_RenderCopy(renderer, medalTexture, &src, &dst);
+    }
+}
 
 
 

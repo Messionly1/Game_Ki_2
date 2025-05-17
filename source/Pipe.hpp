@@ -10,6 +10,7 @@
 #include<stdlib.h>
 #include<random>
 #include"Score.hpp"
+
 class Pipe
 {
 private:
@@ -20,6 +21,15 @@ private:
     bool PipeScored=false;
     bool MovingPipe=true;
     int moveDirection;
+
+
+    bool isDoublePipe = false;
+    bool isRandomSize = false;
+    float sizeMultiplier = 1.0f;
+    int gapBetweenPipes = 0;
+    bool isMergedPipe = false;
+    float mergedPipeOffset = 0.0f;
+    int mergedPipeWidth = 0;
 
 public:
     Pipe(float _x,float _y,std::vector<SDL_Texture*>_tex,float _space);
@@ -41,6 +51,13 @@ public:
     void setMovingPipe(bool s);
     bool getMovingPipe();
 
+    void setDoublePipe(bool isDouble);
+    bool getDoublePipe() const;
+    void setRandomSize(bool random);
+    bool getRandomSize() const;
+    float getSizeMultiplier() const;
+    int getGapBetweenPipes() const;
+
     void updateAlpha();
     int getAlpha();
     void setFading(bool f);
@@ -51,6 +68,8 @@ public:
     bool isScored() const { return PipeScored; }
     void setScored(bool scored) { PipeScored = scored; }
 
+    bool isMerged() const;
+    float getMergedOffset() const;
+    void setMerged(bool merged, float offset = 30.0f);
 };
 #endif // PIPE_HPP_INCLUDED
-

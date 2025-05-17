@@ -33,7 +33,6 @@ public:
     int getCountingScore();
     void setCountingScore(int x);
     void reset();
-
     void addPoint();
 
 };
