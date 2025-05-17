@@ -5,26 +5,23 @@
 #include<SDL_mixer.h>
 #include"source/RenderWindow.hpp"
 #include<vector>
-#include "source/AnyThing.hpp"
-
+#include"source/Anything.hpp"
 
 using namespace std;
-
 void gameLoop();
 RenderWindow window("Game",288,512);
 SDL_Texture *city=window.loadTexture("asset/pinknightbg.png");
 SDL_Texture *ground=window.loadTexture("asset/pinkbase2.png");
-
+SDL_Texture *medal=window.loadTexture("asset/medal.png");
 Mix_Chunk *jumpSfx;
 Mix_Chunk* hitSfx;
-Mix_Chunk * swooshSfx;
+Mix_Chunk *swooshSfx;
 Mix_Chunk *pointSfx;
 Mix_Chunk *dieSfx;
-Mix_Music *backgroundMusic = NULL;
-Mix_Music* bgMusic=NULL;
+Mix_Music* bgMusic;
 
 vector<SDL_Texture*> things;
-vector<SDL_Texture*> p; //pipe
+vector<SDL_Texture*> p;
 vector<SDL_Texture*>bird ;
 
 bool init()
@@ -51,6 +48,8 @@ bool init()
     things.push_back(window.loadTexture("asset/FbPlayButton.png"));  //5
     things .push_back(window.loadTexture("asset/Fb2ndPlayButton.png"));//6
     things.push_back(window.loadTexture("asset/BlendBg.png")); //7
+    things.push_back(window.loadTexture("asset/medal.png"));
+
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     jumpSfx=Mix_LoadWAV("asset/wing.wav");
     hitSfx=Mix_LoadWAV("asset/die2.wav");
@@ -59,6 +58,7 @@ bool init()
     dieSfx=Mix_LoadWAV("asset/die.wav");
     Mix_Volume(-1,MIX_MAX_VOLUME);
     bgMusic = Mix_LoadMUS("asset/music.wav");
+
     return true;
 }
 bool load =init();
@@ -74,10 +74,16 @@ SDL_Color textColor ={255,255,255};
 int a;
 bool check=false,hitSFx =false,swooshSFx=false;
 Score playerScore(144-9,60,flappyFont,textColor);
+
+bool pipe1Scored = false;
+bool pipe2Scored = false;
+
 void reset()
 {
     player.reset();
     pipe1.reset(pipe1,pipe2);
+    pipe1.setScored(false);
+    pipe2.setScored(false);
     ScoreBoard.reset();
     MuchPain.reset();
     mainScreen=true;
@@ -86,11 +92,7 @@ void reset()
     a=0;
     check=false;
     swooshSFx=false;
-    Mix_PlayMusic(bgMusic, -1);
-
 }
-
-
 
 int main(int argv, char** args)
 {
@@ -109,13 +111,6 @@ int main(int argv, char** args)
             if (e.type==SDL_QUIT)
             {
                 isRunning=false;
-            }
-            if (e.type == SDL_KEYDOWN)
-            {
-                if (e.key.keysym.sym == SDLK_p)
-                {
-                    Mix_HaltMusic();
-                }
             }
             if(e.type==SDL_MOUSEBUTTONDOWN)
             {
@@ -137,13 +132,13 @@ int main(int argv, char** args)
                         if (e.button.button==SDL_BUTTON_LEFT&& (mouseX>288/2-104/2 && mouseX<288/2-104/2+104)&&(mouseY>512-90-130+30 &&mouseY<512-90-130+30+58)&&player.isDead()==DEAD && MuchPain.getCount()>30+playerScore.getScore()*3)
                         {
                             check=true;
-                            a =MuchPain.getCount();
+                            a = MuchPain.getCount();
                         }
                 }
             }
         }
-//Update Screen
-        if(mainScreen)
+//Update Screen-render
+if(mainScreen)
         {
             if (swooshSFx==false)
             {
@@ -163,34 +158,51 @@ int main(int argv, char** args)
         else
         {
             if(player.isDead()!=DEAD)
-            {
-                pipe1.update(1);
-                pipe2.update(2);
-                bg1.updateMainBg();
-                bg2.updateMainBg();
-                base1.updateBase();
-                base2.updateBase();
-            }
-            else if (player.getY()==512-90-(float)player.getWidth()+6) //die
-            {
-                  int mouseX=0,mouseY=0;
-                SDL_GetMouseState(&mouseX,&mouseY);
+{
+    pipe1.update(1);
+    pipe2.update(2);
+    bg1.updateMainBg();
+    bg2.updateMainBg();
+    base1.updateBase();
+    base2.updateBase();
 
-                ScoreBoard.updateScoreBoard();
-                MuchPain.updateMuchPain();
-                if(MuchPain.getCount()>30 &&MuchPain.getCount()%3==1)
-                {
-                    playerScore.update();
-                }
-                if (check ==true)
-                {
-                    blendBg.updateBlendingDark();
-                }
-            }
+    // Check point
+    if (player.getX() > pipe1.getX() + pipe1.getWidth() && !pipe1.isScored())
+    {
+        playerScore.addPoint();
+        pipe1.setScored(true);
+        Mix_PlayChannel(-1, pointSfx, 0);
+    }
+
+    if (player.getX() > pipe2.getX() + pipe2.getWidth() && !pipe2.isScored())
+    {
+        playerScore.addPoint();
+        pipe2.setScored(true);
+        Mix_PlayChannel(-1, pointSfx, 0);
+    }
+}
+else if (player.getY() == 512 - 90 - (float)player.getWidth() + 6)
+{
+    int mouseX = 0, mouseY = 0;
+    SDL_GetMouseState(&mouseX, &mouseY);
+
+    ScoreBoard.updateScoreBoard();
+    MuchPain.updateMuchPain();
+
+    if (MuchPain.getCount() > 30 && MuchPain.getCount() % 3 == 1)
+    {
+        playerScore.update();
+    }
+
+    if (check == true)
+    {
+        blendBg.updateBlendingDark();
+    }
+}
+
         }
         player.update(pipe1,pipe2,mainScreen);
-
-//Render Screen
+        //Render Screen
         if(mainScreen)
         {
             window.renderBackGround(bg1);
@@ -200,7 +212,7 @@ int main(int argv, char** args)
             window.renderBackGround(base2);
             window.renderBackGround(base1);
             window.renderBird(player,player.getImgIndex());
-            window.render(288/2-114/2-5,290,things[0]);
+            window.render(288/2-114/2-5,290,things[0]);  //start
             window.render(288/2-184/2,49+35,things[3]);
             window.renderBackGround(blendBg);
 
@@ -229,7 +241,6 @@ int main(int argv, char** args)
                 window.renderBird(player,player.getImgIndex());
                 if (player.checkSplashWhenDie()==false)
                     {
-                        Mix_HaltMusic();
                         Mix_PlayChannel(-1,hitSfx,0);
 
                         player.setCheckSplash(true);
@@ -239,21 +250,27 @@ int main(int argv, char** args)
                         continue;
 
                     }
-               if (player.getY()==512-90-(float)player.getWidth()+6)
-               {
-                    if (MuchPain.getCount()>30+playerScore.getScore()*3)
+                    if (player.getY()==512-90-(float)player.getWidth()+6)
                     {
-                         window.render(288/2-104/2,512-90-130+30,things[5]);//4+4+3+14
+                   if (MuchPain.getCount()>30+playerScore.getScore()*3)
+{
+    window.render(288/2-104/2,512-90-130+30,things[5]);//4+4+3+14
+}
+window.renderScoreBoard(ScoreBoard);
+window.renderMuchPain(MuchPain);
+if (MuchPain.getCount()>30)
+{
+    window.renderScoreWhenDie(playerScore,player);
+    window.renderHighScore(playerScore,player);
+
+    if (playerScore.getScore() > playerScore.getHighScore())
+    {
+        window.render(288/2 - 226/2 + 28, 512 - 90 - 130 + 46, things[8]);
+    }
+}
+window.renderBackGround(blendBg);
+
                     }
-                      window.renderScoreBoard(ScoreBoard);
-                      window.renderMuchPain(MuchPain);
-                       if (MuchPain.getCount()>30)
-                    {
-                        window.renderScoreWhenDie(playerScore,player);
-                        window.renderHighScore(playerScore,player);
-                    }
-                    window.renderBackGround(blendBg);
-               }
             }
         }
 //Display Screen
@@ -263,7 +280,7 @@ int main(int argv, char** args)
         {
             reset();
         }
-        SDL_Delay(22.5);
+        SDL_Delay(21);
     }
     any.cleanAudio();
     return 0;
@@ -272,3 +289,7 @@ void gameLoop()
 {
 
 }
+
+
+
+
