@@ -183,7 +183,10 @@ void Bird::reset()
     ActtualScore=0;
     SplashWhenDie=false;
     angle=0;  //
+
+
 }
+
 int Bird::getActtualScore()
 {
     return ActtualScore;
@@ -196,6 +199,8 @@ void Bird::setCheckSplash(bool s)
 {
     SplashWhenDie=s;
 }
+
+
 float Bird::getTopRightX(float a)
 {
     return getX()+((float)getWidth())/2*(1+cos(a*PI/180))-((float)getHeight())/2*sin(a*PI/180);

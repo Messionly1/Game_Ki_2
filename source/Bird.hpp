@@ -18,22 +18,25 @@ class Bird
 {
 private:
     Mix_Chunk* hitSfx=Mix_LoadWAV("asset/die2.wav");
-       Mix_Chunk* pointSfx=Mix_LoadWAV("asset/point.wav");
+    Mix_Chunk* pointSfx=Mix_LoadWAV("asset/point.wav");
     float x,y,velocity=0,angle=0;
     SDL_Rect currentFrame;
     int changeImg=0,changeBirdDirectInMainScreen=0;
     int ActtualScore=0;
-    std::    vector<SDL_Texture*>tex;
+    std::vector<SDL_Texture*>tex;
     int playerStatus=ALIVE;
     bool SplashWhenDie=false;
-    int lives = LIVE_CAP;
+    int invincibleFrame = 0;
+    int width, height;
+
 
 public:
     Bird(float _x,float _y,std::vector<SDL_Texture*>_tex);
     float getX();
     float getY();
-    int getHeight();
-    int getWidth();
+int getWidth() ;
+int getHeight() ;
+
     void setY(float _y );
     void  setX(float _x);
     void jump();
@@ -48,6 +51,9 @@ public:
     void setAngle(float _angle);
     bool checkSplashWhenDie();
     void setCheckSplash(bool s);
+    int state; // 0 = ALIVE, 1 = DEAD
+    bool checkSplash;
+
     float getTopRightX(float a);
     float getTopRightY(float a);
     float getTopLeftX(float a);
@@ -58,8 +64,11 @@ public:
     float getBottomRightY(float a);
 
     void resetNearestPipes(Pipe& p1, Pipe& p2, float birdX);
-
     void respawn();
+
+void setStatus(int status);              // thay đổi trạng thái DEAD
+
+
 };
 #endif // BIRD_HPP_INCLUDED
 

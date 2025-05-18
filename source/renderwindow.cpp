@@ -217,6 +217,26 @@ void RenderWindow::renderMedal(Anything &thing,SDL_Texture* medalTexture,int sco
 
     }
 }
+void RenderWindow::renderHearts(Anything &thing, SDL_Texture* heartTexture, int lives) {
+    if (lives <= 0 || !heartTexture) return;
+
+    SDL_Rect src;
+    src.x = thing.getCurrentFrame().x;
+    src.y = thing.getCurrentFrame().y;
+    src.w = thing.getCurrentFrame().w;
+    src.h = thing.getCurrentFrame().h;
+
+    for (int i = 0; i < lives; ++i) {
+        SDL_Rect dst;
+        dst.x = -15 + i * 25;
+        dst.y = -5;
+
+        dst.w = src.w;
+        dst.h = src.h;
+
+        SDL_RenderCopy(renderer, heartTexture, &src, &dst);
+    }
+}
 
 
 

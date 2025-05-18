@@ -34,6 +34,8 @@ public:
     void renderScoreWhenDie(Score &sc,Bird &b);
     void renderHighScore(Score &sc,Bird &b);
     void renderMedal(Anything &thing,SDL_Texture *medalTexture, int score, int highScore);
+    void renderHearts(Anything &thing,SDL_Texture* heartTexture, int lives);
+
     SDL_Renderer *getRenderer();
 };
 

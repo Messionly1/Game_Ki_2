@@ -66,8 +66,6 @@ SDL_Rect Pipe::getCurrentFrame()
     return currentFrame;
 }
 
-
-
 void Pipe::setRandomSize(bool random) {
     isRandomSize = random;
     if(isRandomSize && sizeMultiplier == 1.0f) {
