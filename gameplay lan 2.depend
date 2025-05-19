@@ -184,7 +184,7 @@
 	<string>
 	<iostream>
 
-1747464690 source:c:\users\legion\onedrive\desktop\tri_game\main.cpp
+1747634528 source:c:\users\legion\onedrive\desktop\tri_game\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -194,7 +194,7 @@
 	<vector>
 	"source/Anything.hpp"
 
-1747464420 c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.hpp
+1747466231 c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -206,7 +206,7 @@
 	"Score.hpp"
 	"AnyThing.hpp"
 
-1746848847 c:\users\legion\onedrive\desktop\tri_game\source\bird.hpp
+1747633282 c:\users\legion\onedrive\desktop\tri_game\source\bird.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -216,7 +216,7 @@
 	<vector>
 	<SDL_mixer.h>
 
-1747271185 c:\users\legion\onedrive\desktop\tri_game\source\pipe.hpp
+1747632831 c:\users\legion\onedrive\desktop\tri_game\source\pipe.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -256,13 +256,13 @@
 1746648996 source:c:\users\legion\onedrive\desktop\tri_game\source\background.cpp
 	"Background.hpp"
 
-1746849936 source:c:\users\legion\onedrive\desktop\tri_game\source\bird.cpp
+1747633704 source:c:\users\legion\onedrive\desktop\tri_game\source\bird.cpp
 	"Bird.hpp"
 
-1747365161 source:c:\users\legion\onedrive\desktop\tri_game\source\pipe.cpp
+1747633328 source:c:\users\legion\onedrive\desktop\tri_game\source\pipe.cpp
 	"Pipe.hpp"
 
-1747464552 source:c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.cpp
+1747633936 source:c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.cpp
 	"RenderWindow.hpp"
 	<SDL.h>
 	<SDL_image.h>
