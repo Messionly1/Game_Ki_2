@@ -184,7 +184,7 @@
 	<string>
 	<iostream>
 
-1747666102 source:c:\users\legion\onedrive\desktop\tri_game\main.cpp
+1747669236 source:c:\users\legion\onedrive\desktop\tri_game\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -271,11 +271,11 @@
 1747360767 source:c:\users\legion\onedrive\desktop\tri_game\source\score.cpp
 	"Score.hpp"
 
-1747665220 source:c:\users\legion\onedrive\desktop\tri_game\source\menu.cpp
+1747669172 source:c:\users\legion\onedrive\desktop\tri_game\source\menu.cpp
 	"Menu.hpp"
 	<iostream>
 
-1747665476 c:\users\legion\onedrive\desktop\tri_game\source\menu.hpp
+1747669163 c:\users\legion\onedrive\desktop\tri_game\source\menu.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<vector>

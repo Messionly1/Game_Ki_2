@@ -11,6 +11,10 @@
 using namespace std;
 int lives = 3;
 
+// Game state enum
+enum GameState { MAIN_MENU, SETTINGS_MENU, GAME };
+GameState state = MAIN_MENU; // Start with main menu
+
 void gameLoop();
 RenderWindow window("FLAPPY BIRD", 288, 512);
 SDL_Texture *city = window.loadTexture("asset/pinknightbg.png");
@@ -23,12 +27,16 @@ Mix_Chunk *hitSfx;
 Mix_Chunk *swooshSfx;
 Mix_Chunk *pointSfx;
 Mix_Chunk *dieSfx;
-Mix_Music *bgMusic;
+Mix_Music *bgMusic1; // music.wav
+Mix_Music *bgMusic2; // music2.wav
+Mix_Music *bgMusic3; // music3.wav
+Mix_Music *currentMusic; // Current playing music
 
 vector<SDL_Texture*> things;
 vector<SDL_Texture*> p;
 vector<SDL_Texture*> bird;
 vector<SDL_Texture*> menuButtons;
+vector<SDL_Texture*> settingsButtons; // For level1.png, level2.png, level3.png
 Anything heart(0, 0, 24, 24, nullptr);
 
 bool init() {
@@ -61,6 +69,11 @@ bool init() {
     menuButtons.push_back(window.loadTexture("asset/buttonSetting.png")); // 1: Settings
     menuButtons.push_back(window.loadTexture("asset/buttonQuit.png"));    // 2: Quit
 
+    // Load settings buttons
+    settingsButtons.push_back(window.loadTexture("asset/level1.png"));    // 0: music.wav
+    settingsButtons.push_back(window.loadTexture("asset/level2.png"));    // 1: music2.wav
+    settingsButtons.push_back(window.loadTexture("asset/level3.png"));    // 2: music3.wav
+
     heartTexture = window.loadTexture("asset/heart.png");
     if (!heartTexture) {
         std::cout << "Failed to load heart.png: " << SDL_GetError() << std::endl;
@@ -75,7 +88,11 @@ bool init() {
     swooshSfx = Mix_LoadWAV("asset/swoosh.wav");
     dieSfx = Mix_LoadWAV("asset/die.wav");
     Mix_Volume(-1, MIX_MAX_VOLUME);
-    bgMusic = Mix_LoadMUS("asset/music.wav");
+    bgMusic1 = Mix_LoadMUS("asset/music.wav");
+    bgMusic2 = Mix_LoadMUS("asset/music2.wav");
+    bgMusic3 = Mix_LoadMUS("asset/music3.wav");
+    currentMusic = bgMusic1; // Default music
+    Mix_PlayMusic(currentMusic, -1); // Start playing default music
 
     return true;
 }
@@ -93,19 +110,22 @@ SDL_Color textColor = {255, 255, 255};
 int a;
 bool check = false, hitSFx = false, swooshSFx = false;
 Score playerScore(144-9, 60, flappyFont, textColor);
-Menu menu(window.loadTexture("asset/menu.png"), menuButtons); // Initialize menu
+Menu mainMenu(window.loadTexture("asset/menu.png"), menuButtons); // Main menu
+Menu settingsMenu(window.loadTexture("asset/menu.png"), settingsButtons); // Settings menu
 bool pipe1Scored = false;
 bool pipe2Scored = false;
 
 void reset() {
     player.reset();
     pipe1.reset(pipe1, pipe2);
-    pipe1.setScored(false); // Reverted to original
-    pipe2.setScored(false); // Reverted to original
+    pipe1.setScored(false);
+    pipe2.setScored(false);
     ScoreBoard.reset();
     MuchPain.reset();
-    mainScreen = false; // Return to menu
-    menu.setMenuActive(true);
+    mainScreen = false;
+    mainMenu.setMenuActive(true);
+    settingsMenu.setMenuActive(false); // Ensure settings menu is off
+    state = MAIN_MENU; // Return to main menu
     playerScore.reset();
     blendBg.reset();
     a = 0;
@@ -128,22 +148,45 @@ int main(int argv, char** args) {
                 isRunning = false;
             }
 
-            if (menu.isMenuActive()) {
-                menu.update(e);
-                if (!menu.isMenuActive()) {
-                    int selected = menu.getSelectedButton();
+            if (state == MAIN_MENU) {
+                mainMenu.update(e);
+                if (!mainMenu.isMenuActive()) {
+                    int selected = mainMenu.getSelectedButton();
                     if (selected == 0) { // Play
                         mainScreen = true;
+                        state = GAME;
                         player.jump();
                         Mix_PlayChannel(-1, jumpSfx, 0);
                     } else if (selected == 1) { // Settings
-                        std::cout << "Settings menu selected (not implemented)" << std::endl;
-                        menu.setMenuActive(true); // Re-enable menu
+                        state = SETTINGS_MENU;
+                        mainMenu.setMenuActive(true); // Reset main menu
+                        settingsMenu.setMenuActive(true); // Activate settings menu
                     } else if (selected == 2) { // Quit
                         isRunning = false;
                     }
                 }
-            } else {
+            } else if (state == SETTINGS_MENU) {
+                settingsMenu.update(e);
+                if (!settingsMenu.isMenuActive()) {
+                    int selected = settingsMenu.getSelectedButton();
+                    if (selected == 0) { // Music 1
+                        Mix_HaltMusic();
+                        currentMusic = bgMusic1;
+                        Mix_PlayMusic(currentMusic, -1);
+                    } else if (selected == 1) { // Music 2
+                        Mix_HaltMusic();
+                        currentMusic = bgMusic2;
+                        Mix_PlayMusic(currentMusic, -1);
+                    } else if (selected == 2) { // Music 3
+                        Mix_HaltMusic();
+                        currentMusic = bgMusic3;
+                        Mix_PlayMusic(currentMusic, -1);
+                    }
+                    state = MAIN_MENU; // Return to main menu
+                    settingsMenu.setMenuActive(true); // Reset settings menu
+                    mainMenu.setMenuActive(true); // Activate main menu
+                }
+            } else { // GAME
                 if (e.type == SDL_MOUSEBUTTONDOWN) {
                     int mouseX = 0, mouseY = 0;
                     SDL_GetMouseState(&mouseX, &mouseY);
@@ -168,109 +211,113 @@ int main(int argv, char** args) {
             }
         }
 
-        if (menu.isMenuActive()) {
-            menu.render(window);
-        } else if (mainScreen) {
-            if (!swooshSFx) {
-                swooshSFx = true;
-                Mix_PlayChannel(-1, swooshSfx, 0);
-            }
-            pipe1.reset(pipe1, pipe2);
-            blendBg.updateBlendingLight();
-            player.setX(120);
-            player.setY(512/2-18);
-            player.update(pipe1, pipe2, mainScreen);
-            bg1.updateMainBg();
-            bg2.updateMainBg();
-            base1.updateBase();
-            base2.updateBase();
-            window.renderBackGround(bg1);
-            window.renderBackGround(bg2);
-            window.renderPipe(pipe1);
-            window.renderPipe(pipe2);
-            window.renderBackGround(base2);
-            window.renderBackGround(base1);
-            window.renderBird(player, player.getImgIndex());
-            window.render(288/2-114/2-5, 290, things[0]);  // Tap to Play
-            window.render(288/2-184/2, 49+35, things[3]);  // Get Ready
-            window.renderBackGround(blendBg);
-        } else {
-            if (player.isDead() != DEAD) {
-                pipe1.update(1, pipe2);
-                pipe2.update(2, pipe1);
+        if (state == MAIN_MENU) {
+            mainMenu.render(window);
+        } else if (state == SETTINGS_MENU) {
+            settingsMenu.render(window);
+        } else { // GAME
+            if (mainScreen) {
+                if (!swooshSFx) {
+                    swooshSFx = true;
+                    Mix_PlayChannel(-1, swooshSfx, 0);
+                }
+                pipe1.reset(pipe1, pipe2);
+                blendBg.updateBlendingLight();
+                player.setX(120);
+                player.setY(512/2-18);
+                player.update(pipe1, pipe2, mainScreen);
                 bg1.updateMainBg();
                 bg2.updateMainBg();
                 base1.updateBase();
                 base2.updateBase();
+                window.renderBackGround(bg1);
+                window.renderBackGround(bg2);
+                window.renderPipe(pipe1);
+                window.renderPipe(pipe2);
+                window.renderBackGround(base2);
+                window.renderBackGround(base1);
+                window.renderBird(player, player.getImgIndex());
+                window.render(288/2-114/2-5, 290, things[0]);  // Tap to Play
+                window.render(288/2-184/2, 49+35, things[3]);  // Get Ready
+                window.renderBackGround(blendBg);
+            } else {
+                if (player.isDead() != DEAD) {
+                    pipe1.update(1, pipe2);
+                    pipe2.update(2, pipe1);
+                    bg1.updateMainBg();
+                    bg2.updateMainBg();
+                    base1.updateBase();
+                    base2.updateBase();
 
-                if (player.getX() > pipe1.getX() + pipe1.getWidth() && !pipe1.isScored()) {
-                    playerScore.addPoint();
-                    pipe1.setScored(true);
-                    Mix_PlayChannel(-1, pointSfx, 0);
-                }
-                if (player.getX() > pipe2.getX() + pipe2.getWidth() && !pipe2.isScored()) {
-                    playerScore.addPoint();
-                    pipe2.setScored(true);
-                    Mix_PlayChannel(-1, pointSfx, 0);
-                }
-            } else if (player.getY() == 512 - 90 - (float)player.getWidth() + 6) {
-                int mouseX = 0, mouseY = 0;
-                SDL_GetMouseState(&mouseX, &mouseY);
-                ScoreBoard.updateScoreBoard();
-                MuchPain.updateMuchPain();
-                if (MuchPain.getCount() > 30 && MuchPain.getCount() % 3 == 1) {
-                    playerScore.update();
-                }
-                if (check == true) {
-                    blendBg.updateBlendingDark();
-                }
-            }
-            player.update(pipe1, pipe2, mainScreen); // Critical for movement
-            window.renderBackGround(bg1);
-            window.renderBackGround(bg2);
-            window.renderPipe(pipe1);
-            window.renderPipe(pipe2);
-            window.renderBackGround(base2);
-            window.renderBackGround(base1);
-            window.renderScore(playerScore, player);
-            window.renderBird(player, player.getImgIndex());
-            window.renderHearts(heart, heartTexture, player.getLives());
-
-            if (player.isDead() == DEAD) {
-                if (!player.checkSplashWhenDie()) {
-                    Mix_PlayChannel(-1, hitSfx, 0);
-                    player.setCheckSplash(true);
-                    if (player.getY() >= 512 - 90 - player.getWidth() + 6) {
-                        lives = 0;
-                    } else {
-                        lives--;
-                        if (player.getX() + player.getWidth() > pipe1.getX() && player.getX() < pipe1.getX() + pipe1.getWidth()) {
-                            pipe1.reset(pipe1, pipe2);
-                        } else if (player.getX() + player.getWidth() > pipe2.getX() && player.getX() < pipe2.getX() + pipe2.getWidth()) {
-                            pipe2.reset(pipe1, pipe2);
-                        }
+                    if (player.getX() > pipe1.getX() + pipe1.getWidth() && !pipe1.isScored()) {
+                        playerScore.addPoint();
+                        pipe1.setScored(true);
+                        Mix_PlayChannel(-1, pointSfx, 0);
                     }
-                    if (lives > 0) {
-                        SDL_Delay(250);
+                    if (player.getX() > pipe2.getX() + pipe2.getWidth() && !pipe2.isScored()) {
+                        playerScore.addPoint();
+                        pipe2.setScored(true);
+                        Mix_PlayChannel(-1, pointSfx, 0);
+                    }
+                } else if (player.getY() == 512 - 90 - (float)player.getWidth() + 6) {
+                    int mouseX = 0, mouseY = 0;
+                    SDL_GetMouseState(&mouseX, &mouseY);
+                    ScoreBoard.updateScoreBoard();
+                    MuchPain.updateMuchPain();
+                    if (MuchPain.getCount() > 30 && MuchPain.getCount() % 3 == 1) {
+                        playerScore.update();
+                    }
+                    if (check == true) {
+                        blendBg.updateBlendingDark();
+                    }
+                }
+                player.update(pipe1, pipe2, mainScreen);
+                window.renderBackGround(bg1);
+                window.renderBackGround(bg2);
+                window.renderPipe(pipe1);
+                window.renderPipe(pipe2);
+                window.renderBackGround(base2);
+                window.renderBackGround(base1);
+                window.renderScore(playerScore, player);
+                window.renderBird(player, player.getImgIndex());
+                window.renderHearts(heart, heartTexture, player.getLives());
+
+                if (player.isDead() == DEAD) {
+                    if (!player.checkSplashWhenDie()) {
+                        Mix_PlayChannel(-1, hitSfx, 0);
+                        player.setCheckSplash(true);
+                        if (player.getY() >= 512 - 90 - player.getWidth() + 6) {
+                            lives = 0;
+                        } else {
+                            lives--;
+                            if (player.getX() + player.getWidth() > pipe1.getX() && player.getX() < pipe1.getX() + pipe1.getWidth()) {
+                                pipe1.reset(pipe1, pipe2);
+                            } else if (player.getX() + player.getWidth() > pipe2.getX() && player.getX() < pipe2.getX() + pipe2.getWidth()) {
+                                pipe2.reset(pipe1, pipe2);
+                            }
+                        }
+                        if (lives > 0) {
+                            SDL_Delay(250);
+                            continue;
+                        }
+                        window.render(0, 0, things[1]);
+                        window.display();
+                        SDL_Delay(60);
                         continue;
                     }
-                    window.render(0, 0, things[1]);
-                    window.display();
-                    SDL_Delay(60);
-                    continue;
-                }
-                if (player.getY() == 512 - 90 - (float)player.getWidth() + 6) {
-                    if (MuchPain.getCount() > 30 + playerScore.getScore() * 3) {
-                        window.render(288/2 - 104/2, 512 - 90 - 130 + 30, things[5]);
+                    if (player.getY() == 512 - 90 - (float)player.getWidth() + 6) {
+                        if (MuchPain.getCount() > 30 + playerScore.getScore() * 3) {
+                            window.render(288/2 - 104/2, 512 - 90 - 130 + 30, things[5]);
+                        }
+                        window.renderScoreBoard(ScoreBoard);
+                        window.renderMuchPain(MuchPain);
+                        if (MuchPain.getCount() > 30) {
+                            window.renderScoreWhenDie(playerScore, player);
+                            window.renderHighScore(playerScore, player);
+                            window.renderMedal(ScoreBoard, things[8], playerScore.getCountingScore(), playerScore.getHighScore());
+                        }
+                        window.renderBackGround(blendBg);
                     }
-                    window.renderScoreBoard(ScoreBoard);
-                    window.renderMuchPain(MuchPain);
-                    if (MuchPain.getCount() > 30) {
-                        window.renderScoreWhenDie(playerScore, player);
-                        window.renderHighScore(playerScore, player);
-                        window.renderMedal(ScoreBoard, things[8], playerScore.getCountingScore(), playerScore.getHighScore());
-                    }
-                    window.renderBackGround(blendBg);
                 }
             }
         }
@@ -283,6 +330,9 @@ int main(int argv, char** args) {
         SDL_Delay(21);
     }
     any.cleanAudio();
+    Mix_FreeMusic(bgMusic1);
+    Mix_FreeMusic(bgMusic2);
+    Mix_FreeMusic(bgMusic3);
     return 0;
 }
 
