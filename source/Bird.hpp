@@ -14,6 +14,7 @@ const int DEAD=1,ALIVE=0,PLAYING=2;
 const bool TRUE=true;
 const float PI= 3.14159265;
 const int LIVE_CAP = 3;
+
 class Bird
 {
 private:
@@ -28,21 +29,22 @@ private:
     bool SplashWhenDie=false;
     int invincibleFrame = 0;
     int width, height;
-
+    int lives = LIVE_CAP;
+    bool invincible = false;
+    int invincibleFrames = 0;
 
 public:
     Bird(float _x,float _y,std::vector<SDL_Texture*>_tex);
     float getX();
     float getY();
-int getWidth() ;
-int getHeight() ;
-
-    void setY(float _y );
-    void  setX(float _x);
+    int getWidth();
+    int getHeight();
+    void setY(float _y);
+    void setX(float _x);
     void jump();
     void update(Pipe &b1,Pipe &b2,bool mainScreen);
     SDL_Texture* getTex(int index);
-        int getImgIndex();
+    int getImgIndex();
     SDL_Rect getCurrentFrame();
     bool isDead();
     void reset();
@@ -53,6 +55,11 @@ int getHeight() ;
     void setCheckSplash(bool s);
     int state; // 0 = ALIVE, 1 = DEAD
     bool checkSplash;
+    int getLives() const { return lives; }
+    void setLives(int _lives) { lives = _lives; }
+    void loseLife() { if (!invincible) lives--; }
+    bool isInvincible() const { return invincible; }
+    void setInvincible(bool _invincible) { invincible = _invincible; }
 
     float getTopRightX(float a);
     float getTopRightY(float a);
@@ -65,14 +72,8 @@ int getHeight() ;
 
     void resetNearestPipes(Pipe& p1, Pipe& p2, float birdX);
     void respawn();
-
-void setStatus(int status);              // thay đổi trạng thái DEAD
+    void setStatus(int status);
 
 
 };
 #endif // BIRD_HPP_INCLUDED
-
-
-
-
-

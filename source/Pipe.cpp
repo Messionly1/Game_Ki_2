@@ -83,13 +83,13 @@ float Pipe::getSizeMultiplier() const {
     return sizeMultiplier;
 }
 
-void Pipe::update(int index)
+void Pipe::update(int index, Pipe& otherPipe)
 {
-    if(getX() > -static_cast<float>(getWidth()))
+    if (getX() > -static_cast<float>(getWidth()))
     {
         setX(getX() + velocity);
 
-        if(getMovingPipe())
+        if (getMovingPipe())
         {
             const int MIN_Y = -220;
             const int MAX_Y = 512 - 90 - 30 - static_cast<int>(PipeSpace) - 320;
@@ -115,7 +115,9 @@ void Pipe::update(int index)
     else
     {
         setMovingPipe(false);
-        setX(340 - 52);
+        float otherPipeX = otherPipe.getX();
+        float newX = std::max(288.0f, otherPipeX + MIN_PIPE_GAP + 50.0f);
+        setX(newX);
         int newY = static_cast<int>(Pipe::getPipeRandom(-220, 512 - 90 - 30 - static_cast<int>(PipeSpace) - 320));
         setY(static_cast<float>(newY));
         setPipeScored(false);
@@ -156,7 +158,7 @@ int Pipe::getPipeRandom(int min_num, int max_num)
 void Pipe::reset(Pipe& p1, Pipe& p2)
 {
     p1.setX(288);
-    p2.setX(288 + MIN_PIPE_GAP + rand() % 50);
+    p2.setX(288 + MIN_PIPE_GAP + 50 + rand() % 50);
 
     if (p1.getPipeSpace() < MIN_PIPE_SPACE) {
         p1.PipeSpace = MIN_PIPE_SPACE;
@@ -166,7 +168,6 @@ void Pipe::reset(Pipe& p1, Pipe& p2)
     }
     p1.PipeScored = false;
     p2.PipeScored = false;
-
 
     bool randomSize = (rand() % 100) < 80;
     p1.setRandomSize(randomSize);

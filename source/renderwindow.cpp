@@ -239,5 +239,3 @@ void RenderWindow::renderHearts(Anything &thing, SDL_Texture* heartTexture, int 
 }
 
 
-
-

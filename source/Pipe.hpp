@@ -33,7 +33,7 @@ private:
 
 public:
     Pipe(float _x,float _y,std::vector<SDL_Texture*>_tex,float _space);
-    void update(int index);
+    void update(int index, Pipe& otherPipe);
     float getX();
     float getPipeSpace();
     float getY();
