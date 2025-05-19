@@ -1,74 +1,70 @@
-#include"Pipe.hpp"
+#include "Pipe.hpp"
+
 const int MIN_PIPE_GAP = 100;
 const int MIN_PIPE_SPACE = 50;
 const int MIN_GAP = 150;
-Pipe::Pipe(float _x, float _y, std::vector<SDL_Texture*> _tex, float _space)
-{
+
+Pipe::Pipe(float _x, float _y, std::vector<SDL_Texture*> _tex, float _space) {
     x = _x;
     y = _y;
     currentFrame.x = 0;
     currentFrame.y = 0;
     PipeSpace = _space;
     tex = _tex;
-    SDL_QueryTexture(tex[0], NULL, NULL, &currentFrame.w, &currentFrame.h);
+    if (tex[0]) {
+        SDL_QueryTexture(tex[0], NULL, NULL, &currentFrame.w, &currentFrame.h);
+    } else {
+        currentFrame.w = 0;
+        currentFrame.h = 0;
+    }
 
     isRandomSize = (rand() % 100) < 70;
-
-    if(isRandomSize) {
+    if (isRandomSize) {
         sizeMultiplier = 0.7f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX/(1.5f - 0.7f)));
         currentFrame.w = static_cast<int>(currentFrame.w * sizeMultiplier);
         currentFrame.h = static_cast<int>(currentFrame.h * sizeMultiplier);
     }
 }
 
-int Pipe::getSize()
-{
+int Pipe::getSize() {
     return tex.size();
 }
 
-float Pipe::getX()
-{
+float Pipe::getX() {
     return x;
 }
 
-float Pipe::getY()
-{
+float Pipe::getY() {
     return y;
 }
 
-void Pipe::setY(float _y)
-{
+void Pipe::setY(float _y) {
     y = _y;
 }
 
-void Pipe::setX(float _x)
-{
+void Pipe::setX(float _x) {
     x = _x;
 }
 
-int Pipe::getWidth()
-{
+int Pipe::getWidth() {
     return getCurrentFrame().w;
 }
 
-int Pipe::getHeight()
-{
+int Pipe::getHeight() {
     return getCurrentFrame().h;
 }
 
-SDL_Texture* Pipe::getTex(int index)
-{
+SDL_Texture* Pipe::getTex(int index) {
     return tex[index];
 }
 
-SDL_Rect Pipe::getCurrentFrame()
-{
+SDL_Rect Pipe::getCurrentFrame() {
     return currentFrame;
 }
 
 void Pipe::setRandomSize(bool random) {
     isRandomSize = random;
-    if(isRandomSize && sizeMultiplier == 1.0f) {
+    if (isRandomSize && sizeMultiplier == 1.0f) {
         sizeMultiplier = 0.7f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX/(1.5f - 0.7f)));
         currentFrame.w = static_cast<int>(currentFrame.w * sizeMultiplier);
         currentFrame.h = static_cast<int>(currentFrame.h * sizeMultiplier);
@@ -83,38 +79,30 @@ float Pipe::getSizeMultiplier() const {
     return sizeMultiplier;
 }
 
-void Pipe::update(int index, Pipe& otherPipe)
-{
-    if (getX() > -static_cast<float>(getWidth()))
-    {
+void Pipe::update(int index, Pipe& otherPipe) {
+    if (getX() > -static_cast<float>(getWidth())) {
         setX(getX() + velocity);
 
-        if (getMovingPipe())
-        {
+        if (getMovingPipe()) {
             const int MIN_Y = -220;
             const int MAX_Y = 512 - 90 - 30 - static_cast<int>(PipeSpace) - 320;
 
             setY(getY() + (0.9 * moveDirection));
 
-            if (getY() > MAX_Y)
-            {
+            if (getY() > MAX_Y) {
                 setY(MAX_Y);
                 moveDirection = -1;
-            }
-            else if (getY() < MIN_Y)
-            {
+            } else if (getY() < MIN_Y) {
                 setY(MIN_Y);
                 moveDirection = 1;
             }
-            const int MIN_GAP = 150;
             if (PipeSpace < MIN_GAP) {
                 PipeSpace = MIN_GAP;
             }
         }
-    }
-    else
-    {
+    } else {
         setMovingPipe(false);
+        // Chỉ sử dụng otherPipe nếu cần thiết
         float otherPipeX = otherPipe.getX();
         float newX = std::max(288.0f, otherPipeX + MIN_PIPE_GAP + 50.0f);
         setX(newX);
@@ -124,26 +112,22 @@ void Pipe::update(int index, Pipe& otherPipe)
     }
 }
 
-float Pipe::getPipeSpace()
-{
+float Pipe::getPipeSpace() {
     return PipeSpace;
 }
 
-int Pipe::getPipeRandom(int min_num, int max_num)
-{
-    const int MIN_GAP = 150;
+int Pipe::getPipeRandom(int min_num, int max_num) {
     if (PipeSpace < MIN_GAP) {
         PipeSpace = MIN_GAP;
     }
 
-    srand(time(NULL));
+    srand(static_cast<unsigned int>(time(NULL)));
     int result = (rand() % (max_num - min_num)) + min_num;
     int chance = rand() % 100;
 
     if (result > max_num - MIN_GAP) {
         result = max_num - MIN_GAP;
-    }
-    else if (result < min_num + MIN_GAP) {
+    } else if (result < min_num + MIN_GAP) {
         result = min_num + MIN_GAP;
     }
 
@@ -155,8 +139,8 @@ int Pipe::getPipeRandom(int min_num, int max_num)
     }
     return result;
 }
-void Pipe::reset(Pipe& p1, Pipe& p2)
-{
+
+void Pipe::reset(Pipe& p1, Pipe& p2) {
     p1.setX(288);
     p2.setX(288 + MIN_PIPE_GAP + 50 + rand() % 50);
 
@@ -177,22 +161,18 @@ void Pipe::reset(Pipe& p1, Pipe& p2)
     p2.setMoveDirection((rand() % 100 < 70) ? -1 : 1);
 }
 
-bool Pipe::isScored()
-{
+bool Pipe::isScored() {
     return PipeScored;
 }
 
-void Pipe::setPipeScored(bool s)
-{
+void Pipe::setPipeScored(bool s) {
     PipeScored = s;
 }
 
-void Pipe::setMovingPipe(bool s)
-{
+void Pipe::setMovingPipe(bool s) {
     MovingPipe = s;
 }
 
-bool Pipe::getMovingPipe()
-{
+bool Pipe::getMovingPipe() {
     return MovingPipe;
 }

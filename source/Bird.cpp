@@ -198,4 +198,3 @@ float Bird::getTopLeftY(float a)
 
 
 
-
