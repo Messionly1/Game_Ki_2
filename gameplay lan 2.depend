@@ -184,17 +184,18 @@
 	<string>
 	<iostream>
 
-1747647009 source:c:\users\legion\onedrive\desktop\tri_game\main.cpp
+1747666102 source:c:\users\legion\onedrive\desktop\tri_game\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
 	"source/RenderWindow.hpp"
-	<vector>
 	"source/Anything.hpp"
+	"source/Menu.hpp"
+	<vector>
 
-1747646186 c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.hpp
+1747651805 c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -204,7 +205,7 @@
 	"Score.hpp"
 	"Anything.hpp"
 
-1747633282 c:\users\legion\onedrive\desktop\tri_game\source\bird.hpp
+1747651699 c:\users\legion\onedrive\desktop\tri_game\source\bird.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -214,7 +215,7 @@
 	<vector>
 	<SDL_mixer.h>
 
-1747632831 c:\users\legion\onedrive\desktop\tri_game\source\pipe.hpp
+1747651446 c:\users\legion\onedrive\desktop\tri_game\source\pipe.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -240,7 +241,7 @@
 	<iostream>
 	<vector>
 
-1747637045 c:\users\legion\onedrive\desktop\tri_game\source\anything.hpp
+1747652152 c:\users\legion\onedrive\desktop\tri_game\source\anything.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -248,7 +249,7 @@
 	<vector>
 	<iostream>
 
-1747637356 source:c:\users\legion\onedrive\desktop\tri_game\source\anything.cpp
+1747652235 source:c:\users\legion\onedrive\desktop\tri_game\source\anything.cpp
 	"AnyThing.hpp"
 
 1746648996 source:c:\users\legion\onedrive\desktop\tri_game\source\background.cpp
@@ -257,10 +258,10 @@
 1747643725 source:c:\users\legion\onedrive\desktop\tri_game\source\bird.cpp
 	"Bird.hpp"
 
-1747646641 source:c:\users\legion\onedrive\desktop\tri_game\source\pipe.cpp
+1747651649 source:c:\users\legion\onedrive\desktop\tri_game\source\pipe.cpp
 	"Pipe.hpp"
 
-1747647038 source:c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.cpp
+1747652153 source:c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.cpp
 	"RenderWindow.hpp"
 	<SDL.h>
 	<SDL_image.h>
@@ -269,4 +270,14 @@
 
 1747360767 source:c:\users\legion\onedrive\desktop\tri_game\source\score.cpp
 	"Score.hpp"
+
+1747665220 source:c:\users\legion\onedrive\desktop\tri_game\source\menu.cpp
+	"Menu.hpp"
+	<iostream>
+
+1747665476 c:\users\legion\onedrive\desktop\tri_game\source\menu.hpp
+	<SDL.h>
+	<SDL_image.h>
+	<vector>
+	"RenderWindow.hpp"
 

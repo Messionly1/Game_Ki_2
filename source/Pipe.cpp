@@ -102,7 +102,6 @@ void Pipe::update(int index, Pipe& otherPipe) {
         }
     } else {
         setMovingPipe(false);
-        // Chỉ sử dụng otherPipe nếu cần thiết
         float otherPipeX = otherPipe.getX();
         float newX = std::max(288.0f, otherPipeX + MIN_PIPE_GAP + 50.0f);
         setX(newX);

@@ -2,20 +2,14 @@
 
 Anything::Anything(float _srcX, float _srcY, float _dstX, float _dstY, SDL_Texture* _texture)
 {
-    x = _srcX;
-    y = _srcY;
-    dstX = _dstX;
-    dstY = _dstY;
-    texture = _texture;
-    currentFrame.x = 0;
-    currentFrame.y = 0;
-    SDL_QueryTexture(texture, NULL, NULL, &currentFrame.w, &currentFrame.h);
-    hovered = false; // Khởi tạo hovered
-    count = 0;
-    ScoreBoardVelocity = -24;
-    MuchPainVelocity = 4;
-    inDst = false;
-    bgMusic = nullptr;
+     x=_srcX;
+    y=_srcY;
+    dstX=_dstX;
+    dstY=_dstY;
+    texture=_texture;
+    currentFrame.x=0;
+    currentFrame.y=0;
+    SDL_QueryTexture(texture,NULL,NULL,&currentFrame.w,&currentFrame.h);
 }
 
 float Anything::getX() { return x; }
@@ -30,7 +24,7 @@ int Anything::getWidth() { return getCurrentFrame().w; }
 int Anything::getHeight() { return getCurrentFrame().h; }
 
 SDL_Rect Anything::getCurrentFrame() { return currentFrame; }
-SDL_Texture* Anything::getTexture() { return texture; }
+SDL_Texture* Anything::getTex() { return texture; }
 void Anything::updateScoreBoard()
 {
     if (getY() > dstY && count > 11)
@@ -80,10 +74,6 @@ void Anything::reset()
 }
 
 int Anything::getCount() { return count; }
-
-void Anything::setHovered(bool _hovered) { hovered = _hovered; }
-bool Anything::isHovered() { return hovered; }
-
 void Anything::initAudio() {
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         SDL_Log("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());

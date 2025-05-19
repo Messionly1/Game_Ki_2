@@ -53,6 +53,8 @@
 		<Unit filename="source/Score.hpp" />
 		<Unit filename="source/anything.cpp" />
 		<Unit filename="source/background.cpp" />
+		<Unit filename="source/menu.cpp" />
+		<Unit filename="source/menu.hpp" />
 		<Unit filename="source/renderwindow.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

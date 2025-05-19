@@ -29,6 +29,7 @@ private:
     bool SplashWhenDie=false;
     int invincibleFrame = 0;
     int width, height;
+
     int lives = LIVE_CAP;
     bool invincible = false;
     int invincibleFrames = 0;

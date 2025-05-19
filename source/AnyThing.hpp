@@ -20,7 +20,6 @@ private:
     float x, y, z, dstX, dstY, ScoreBoardVelocity = -24, MuchPainVelocity = 4;
     int TextureFrameUp = 1, TextureFrameDown = 2;
     int count = 0;
-    bool hovered = false; // Thêm thuộc tính hovered
     Mix_Music* bgMusic = NULL;
 
 public:
@@ -40,12 +39,8 @@ public:
     void updateScoreBoard();
     void updateMuchPain();
     bool isInDst();
-    SDL_Texture* getTexture(); // Đổi từ getTex thành getTexture
+    SDL_Texture* getTex();
     void reset();
-
-    void setHovered(bool _hovered); // Thêm phương thức setHovered
-    bool isHovered(); // Thêm phương thức isHovered
-
     void initAudio();
     void cleanAudio();
 };
