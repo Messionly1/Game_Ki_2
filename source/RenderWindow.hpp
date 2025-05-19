@@ -16,23 +16,24 @@ private:
     SDL_Renderer* renderer;
 
 public:
-    RenderWindow(const char* p_title, int p_w, int p_h);
-    void render(float p_x, float p_y, SDL_Texture* p_tex, float scale = 1.0f);
-    void display();
-    void cleanUp();
-    SDL_Renderer* getRenderer();
-    void clear();
+   RenderWindow(const char* p_title, int p_w, int p_h);
     SDL_Texture* loadTexture(const char* p_filePath);
-    void renderBird(Bird &bird, int index);
-    void renderBackGround(Background &bg);
-    void renderPipe(Pipe &pipe);
-    void renderScore(Score &sc, Bird &b);
-    void renderHighScore(Score &sc, Bird &b);
-    void renderScoreWhenDie(Score &sc, Bird &b);
-    void renderMuchPain(Anything &thing);
-    void renderScoreBoard(Anything &thing);
-    void renderMedal(Anything &thing, SDL_Texture* medalTexture, int score, int highScore);
-    void renderHearts(Anything &thing, SDL_Texture* heartTexture, int lives);
+    void cleanUp();
+    void clear();
+    void render(float p_x, float p_y, SDL_Texture* p_tex, float scale = 1.0f);
+    void renderBird(Bird& bird, int index);
+    void renderBackGround(Background& bg);
+    void renderPipe(Pipe& pipe);
+    void renderScore(Score& sc, Bird& b);
+    void renderHighScore(Score& sc, Bird& b);
+    void renderScoreWhenDie(Score& sc, Bird& b);
+    void renderMuchPain(Anything& thing);
+    void renderScoreBoard(Anything& thing);
+    void renderMedal(Anything& thing, SDL_Texture* medalTexture, int score, int highScore);
+    void renderHearts(Anything& thing, SDL_Texture* heartTexture, int lives);
+    void renderMusicToggle(Anything& thing, SDL_Texture* onTexture, SDL_Texture* offTexture, bool isMusicOn);
+    void display();
+    SDL_Renderer* getRenderer();
 };
 
 #endif

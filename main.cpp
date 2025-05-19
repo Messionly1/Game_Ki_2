@@ -11,9 +11,8 @@
 using namespace std;
 int lives = 3;
 
-// Game state enum
 enum GameState { MAIN_MENU, SETTINGS_MENU, GAME };
-GameState state = MAIN_MENU; // Start with main menu
+GameState state = MAIN_MENU;
 
 void gameLoop();
 RenderWindow window("FLAPPY BIRD", 288, 512);
@@ -21,23 +20,27 @@ SDL_Texture *city = window.loadTexture("asset/pinknightbg.png");
 SDL_Texture *ground = window.loadTexture("asset/pinkbase2.png");
 SDL_Texture *medal = window.loadTexture("asset/medal.png");
 SDL_Texture *heartTexture;
+SDL_Texture *musicOnTexture;
+SDL_Texture *musicOffTexture;
 
 Mix_Chunk *jumpSfx;
 Mix_Chunk *hitSfx;
 Mix_Chunk *swooshSfx;
 Mix_Chunk *pointSfx;
 Mix_Chunk *dieSfx;
-Mix_Music *bgMusic1; // music.wav
-Mix_Music *bgMusic2; // music2.wav
-Mix_Music *bgMusic3; // music3.wav
-Mix_Music *currentMusic; // Current playing music
+Mix_Music *bgMusic1;
+Mix_Music *bgMusic2;
+Mix_Music *bgMusic3;
+Mix_Music *currentMusic;
 
 vector<SDL_Texture*> things;
 vector<SDL_Texture*> p;
 vector<SDL_Texture*> bird;
 vector<SDL_Texture*> menuButtons;
-vector<SDL_Texture*> settingsButtons; // For level1.png, level2.png, level3.png
+vector<SDL_Texture*> settingsButtons;
 Anything heart(0, 0, 24, 24, nullptr);
+Anything musicToggle(225, 0, 254, 10, nullptr);
+bool isMusicOn = true;
 
 bool init() {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
@@ -54,25 +57,23 @@ bool init() {
     bird.push_back(window.loadTexture("asset/FbRedBird1.png"));
     bird.push_back(window.loadTexture("asset/FbRedBird2.png"));
     bird.push_back(window.loadTexture("asset/FbRedBird3.png"));
-    things.push_back(window.loadTexture("asset/FbTapToPlay.png"));   //0
-    things.push_back(window.loadTexture("asset/WhiteTex.png"));      //1
-    things.push_back(window.loadTexture("asset/ScoreBoard.png"));    //2
-    things.push_back(window.loadTexture("asset/FbGetReady.png"));    //3
-    things.push_back(window.loadTexture("asset/FbMuchPain.png"));    //4
-    things.push_back(window.loadTexture("asset/FbPlayButton.png"));  //5
-    things.push_back(window.loadTexture("asset/Fb2ndPlayButton.png"));//6
-    things.push_back(window.loadTexture("asset/BlendBg.png"));       //7
-    things.push_back(window.loadTexture("asset/medal.png"));         //8
+    things.push_back(window.loadTexture("asset/FbTapToPlay.png"));
+    things.push_back(window.loadTexture("asset/WhiteTex.png"));
+    things.push_back(window.loadTexture("asset/ScoreBoard.png"));
+    things.push_back(window.loadTexture("asset/FbGetReady.png"));
+    things.push_back(window.loadTexture("asset/FbMuchPain.png"));
+    things.push_back(window.loadTexture("asset/FbPlayButton.png"));
+    things.push_back(window.loadTexture("asset/Fb2ndPlayButton.png"));
+    things.push_back(window.loadTexture("asset/BlendBg.png"));
+    things.push_back(window.loadTexture("asset/medal.png"));
 
-    // Load menu buttons
-    menuButtons.push_back(window.loadTexture("asset/buttonPlay.png"));    // 0: Play
-    menuButtons.push_back(window.loadTexture("asset/buttonSetting.png")); // 1: Settings
-    menuButtons.push_back(window.loadTexture("asset/buttonQuit.png"));    // 2: Quit
+    menuButtons.push_back(window.loadTexture("asset/buttonPlay.png"));
+    menuButtons.push_back(window.loadTexture("asset/buttonSetting.png"));
+    menuButtons.push_back(window.loadTexture("asset/buttonQuit.png"));
 
-    // Load settings buttons
-    settingsButtons.push_back(window.loadTexture("asset/level1.png"));    // 0: music.wav
-    settingsButtons.push_back(window.loadTexture("asset/level2.png"));    // 1: music2.wav
-    settingsButtons.push_back(window.loadTexture("asset/level3.png"));    // 2: music3.wav
+    settingsButtons.push_back(window.loadTexture("asset/level1.png"));
+    settingsButtons.push_back(window.loadTexture("asset/level2.png"));
+    settingsButtons.push_back(window.loadTexture("asset/level3.png"));
 
     heartTexture = window.loadTexture("asset/heart.png");
     if (!heartTexture) {
@@ -80,6 +81,15 @@ bool init() {
         heartTexture = things[0];
     }
     heart = Anything(0, 0, 24, 24, heartTexture);
+
+    musicOnTexture = window.loadTexture("asset/on.png");
+    musicOffTexture = window.loadTexture("asset/off.png");
+    if (!musicOnTexture || !musicOffTexture) {
+        std::cout << "Failed to load music toggle textures: " << SDL_GetError() << std::endl;
+        musicOnTexture = things[0];
+        musicOffTexture = things[0];
+    }
+    musicToggle = Anything(225, 0, 254, 10, musicOffTexture);
 
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     jumpSfx = Mix_LoadWAV("asset/wing.wav");
@@ -91,14 +101,14 @@ bool init() {
     bgMusic1 = Mix_LoadMUS("asset/music.wav");
     bgMusic2 = Mix_LoadMUS("asset/music2.wav");
     bgMusic3 = Mix_LoadMUS("asset/music3.wav");
-    currentMusic = bgMusic1; // Default music
-    Mix_PlayMusic(currentMusic, -1); // Start playing default music
+    currentMusic = bgMusic1;
+    Mix_PlayMusic(currentMusic, -1);
 
     return true;
 }
 
 bool load = init();
-bool mainScreen = false; // Start with menu
+bool mainScreen = false;
 Anything ScoreBoard(288/2-226/2, 512, 288/2-226/2, 512-90-114-130, things[2]);
 Anything MuchPain(288/2-186/2, 55, 288/2-186/2, 80, things[4]);
 Bird player(50, 512/2-18, bird);
@@ -110,8 +120,8 @@ SDL_Color textColor = {255, 255, 255};
 int a;
 bool check = false, hitSFx = false, swooshSFx = false;
 Score playerScore(144-9, 60, flappyFont, textColor);
-Menu mainMenu(window.loadTexture("asset/menu.png"), menuButtons); // Main menu
-Menu settingsMenu(window.loadTexture("asset/menu.png"), settingsButtons); // Settings menu
+Menu mainMenu(window.loadTexture("asset/menu.png"), menuButtons);
+Menu settingsMenu(window.loadTexture("asset/menu.png"), settingsButtons);
 bool pipe1Scored = false;
 bool pipe2Scored = false;
 
@@ -124,14 +134,16 @@ void reset() {
     MuchPain.reset();
     mainScreen = false;
     mainMenu.setMenuActive(true);
-    settingsMenu.setMenuActive(false); // Ensure settings menu is off
-    state = MAIN_MENU; // Return to main menu
+    settingsMenu.setMenuActive(false);
+    state = MAIN_MENU;
     playerScore.reset();
     blendBg.reset();
     a = 0;
     check = false;
     swooshSFx = false;
     lives = 3;
+    isMusicOn = true;
+    Mix_ResumeMusic();
 }
 
 int main(int argv, char** args) {
@@ -152,16 +164,16 @@ int main(int argv, char** args) {
                 mainMenu.update(e);
                 if (!mainMenu.isMenuActive()) {
                     int selected = mainMenu.getSelectedButton();
-                    if (selected == 0) { // Play
+                    if (selected == 0) {
                         mainScreen = true;
                         state = GAME;
                         player.jump();
                         Mix_PlayChannel(-1, jumpSfx, 0);
-                    } else if (selected == 1) { // Settings
+                    } else if (selected == 1) {
                         state = SETTINGS_MENU;
-                        mainMenu.setMenuActive(true); // Reset main menu
-                        settingsMenu.setMenuActive(true); // Activate settings menu
-                    } else if (selected == 2) { // Quit
+                        mainMenu.setMenuActive(true);
+                        settingsMenu.setMenuActive(true);
+                    } else if (selected == 2) {
                         isRunning = false;
                     }
                 }
@@ -169,24 +181,24 @@ int main(int argv, char** args) {
                 settingsMenu.update(e);
                 if (!settingsMenu.isMenuActive()) {
                     int selected = settingsMenu.getSelectedButton();
-                    if (selected == 0) { // Music 1
+                    if (selected == 0) {
                         Mix_HaltMusic();
                         currentMusic = bgMusic1;
-                        Mix_PlayMusic(currentMusic, -1);
-                    } else if (selected == 1) { // Music 2
+                        if (isMusicOn) Mix_PlayMusic(currentMusic, -1);
+                    } else if (selected == 1) {
                         Mix_HaltMusic();
                         currentMusic = bgMusic2;
-                        Mix_PlayMusic(currentMusic, -1);
-                    } else if (selected == 2) { // Music 3
+                        if (isMusicOn) Mix_PlayMusic(currentMusic, -1);
+                    } else if (selected == 2) {
                         Mix_HaltMusic();
                         currentMusic = bgMusic3;
-                        Mix_PlayMusic(currentMusic, -1);
+                        if (isMusicOn) Mix_PlayMusic(currentMusic, -1);
                     }
-                    state = MAIN_MENU; // Return to main menu
-                    settingsMenu.setMenuActive(true); // Reset settings menu
-                    mainMenu.setMenuActive(true); // Activate main menu
+                    state = MAIN_MENU;
+                    settingsMenu.setMenuActive(true);
+                    mainMenu.setMenuActive(true);
                 }
-            } else { // GAME
+            } else {
                 if (e.type == SDL_MOUSEBUTTONDOWN) {
                     int mouseX = 0, mouseY = 0;
                     SDL_GetMouseState(&mouseX, &mouseY);
@@ -196,8 +208,19 @@ int main(int argv, char** args) {
                         Mix_PlayChannel(-1, jumpSfx, 0);
                     } else {
                         if (e.button.button == SDL_BUTTON_LEFT && player.isDead() != DEAD) {
-                            player.jump();
-                            Mix_PlayChannel(-1, jumpSfx, 0);
+                            SDL_Rect musicRect = {musicToggle.getX(), musicToggle.getY(), musicToggle.getWidth(), musicToggle.getHeight()};
+                            if (mouseX >= musicRect.x && mouseX <= musicRect.x + musicRect.w &&
+                                mouseY >= musicRect.y && mouseY <= musicRect.y + musicRect.h) {
+                                isMusicOn = !isMusicOn;
+                                if (isMusicOn) {
+                                    Mix_ResumeMusic();
+                                } else {
+                                    Mix_PauseMusic();
+                                }
+                            } else {
+                                player.jump();
+                                Mix_PlayChannel(-1, jumpSfx, 0);
+                            }
                         }
                         if (e.button.button == SDL_BUTTON_LEFT &&
                             (mouseX > 288/2-104/2 && mouseX < 288/2-104/2+104) &&
@@ -215,7 +238,7 @@ int main(int argv, char** args) {
             mainMenu.render(window);
         } else if (state == SETTINGS_MENU) {
             settingsMenu.render(window);
-        } else { // GAME
+        } else {
             if (mainScreen) {
                 if (!swooshSFx) {
                     swooshSFx = true;
@@ -237,8 +260,8 @@ int main(int argv, char** args) {
                 window.renderBackGround(base2);
                 window.renderBackGround(base1);
                 window.renderBird(player, player.getImgIndex());
-                window.render(288/2-114/2-5, 290, things[0]);  // Tap to Play
-                window.render(288/2-184/2, 49+35, things[3]);  // Get Ready
+                window.render(288/2-114/2-5, 290, things[0]);
+                window.render(288/2-184/2, 49+35, things[3]);
                 window.renderBackGround(blendBg);
             } else {
                 if (player.isDead() != DEAD) {
@@ -281,6 +304,7 @@ int main(int argv, char** args) {
                 window.renderScore(playerScore, player);
                 window.renderBird(player, player.getImgIndex());
                 window.renderHearts(heart, heartTexture, player.getLives());
+                window.renderMusicToggle(musicToggle, musicOnTexture, musicOffTexture, isMusicOn);
 
                 if (player.isDead() == DEAD) {
                     if (!player.checkSplashWhenDie()) {
