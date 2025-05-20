@@ -29,7 +29,8 @@ Technologies:
 - Pipe có đa dạng trạng thái:di chuyển,đứng yên,random SizePipes.
 - Để có Moving Pipe, cài đặt GravityY cho Pipe.
 
-
+# Ngưỡng điểm tự đánh giá
+8,75 - 9,25.
 # Asset  
 
 - https://develion.itch.io/flappy-bird-unity-project
