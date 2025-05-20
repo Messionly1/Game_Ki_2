@@ -453,7 +453,7 @@ int main(int argv, char** args) {
                             }
                         }
                         if (lives > 0) {
-                            SDL_Delay(250);
+                            SDL_Delay(50);
                             continue;
                         }
                         window.render(0, 0, things[1]);
