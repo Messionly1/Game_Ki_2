@@ -7,6 +7,7 @@
 #include "source/Anything.hpp"
 #include "source/Menu.hpp"
 #include <vector>
+#include <random>
 
 using namespace std;
 int lives = 3;
@@ -40,7 +41,18 @@ vector<SDL_Texture*> menuButtons;
 vector<SDL_Texture*> settingsButtons;
 Anything heart(0, 0, 24, 24, nullptr);
 Anything musicToggle(225, 0, 254, 10, nullptr);
+Anything restartButton(288/2 - 104/2, 512 - 90 - 130 + 30, 288/2 - 104/2, 512 - 90 - 130 + 30, nullptr);
 bool isMusicOn = true;
+bool isRestartHovered = false;
+
+vector<SDL_Texture*> getBirdTextures(int colorIndex) {
+    vector<SDL_Texture*> selectedTextures;
+    int startIndex = colorIndex * 3;
+    for (int i = 0; i < 3; ++i) {
+        selectedTextures.push_back(bird[startIndex + i]);
+    }
+    return selectedTextures;
+}
 
 bool init() {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
@@ -82,6 +94,8 @@ bool init() {
     }
     heart = Anything(0, 0, 24, 24, heartTexture);
 
+    restartButton = Anything(288/2 - 104/2, 512 - 90 - 130 + 30, 288/2 - 104/2, 512 - 90 - 130 + 30, things[5]);
+
     musicOnTexture = window.loadTexture("asset/on.png");
     musicOffTexture = window.loadTexture("asset/off.png");
     if (!musicOnTexture || !musicOffTexture) {
@@ -111,7 +125,13 @@ bool load = init();
 bool mainScreen = false;
 Anything ScoreBoard(288/2-226/2, 512, 288/2-226/2, 512-90-114-130, things[2]);
 Anything MuchPain(288/2-186/2, 55, 288/2-186/2, 80, things[4]);
-Bird player(50, 512/2-18, bird);
+
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<> dis(0, 2);
+int initialColorIndex = dis(gen);
+Bird player(50, 512/2-18, getBirdTextures(initialColorIndex), initialColorIndex);
+
 Background bg1(0, 0, city), bg2(288, 0, city), blendBg(0, 0, things[7]);
 Background base1(0, 512-90, ground), base2(288, 512-90, ground);
 Pipe pipe1(288, -220, p, 112), pipe2(288+170, -90, p, 112);
@@ -126,7 +146,8 @@ bool pipe1Scored = false;
 bool pipe2Scored = false;
 
 void reset() {
-    player.reset();
+    int newColorIndex = dis(gen);
+    player = Bird(50, 512/2-18, getBirdTextures(newColorIndex), newColorIndex);
     pipe1.reset(pipe1, pipe2);
     pipe1.setScored(false);
     pipe2.setScored(false);
@@ -143,6 +164,7 @@ void reset() {
     swooshSFx = false;
     lives = 3;
     isMusicOn = true;
+    isRestartHovered = false;
     Mix_ResumeMusic();
 }
 
@@ -208,7 +230,7 @@ int main(int argv, char** args) {
                         Mix_PlayChannel(-1, jumpSfx, 0);
                     } else {
                         if (e.button.button == SDL_BUTTON_LEFT && player.isDead() != DEAD) {
-                            SDL_Rect musicRect = {musicToggle.getX(), musicToggle.getY(), musicToggle.getWidth(), musicToggle.getHeight()};
+                            SDL_Rect musicRect = {static_cast<int>(musicToggle.getX()), static_cast<int>(musicToggle.getY()), musicToggle.getWidth(), musicToggle.getHeight()};
                             if (mouseX >= musicRect.x && mouseX <= musicRect.x + musicRect.w &&
                                 mouseY >= musicRect.y && mouseY <= musicRect.y + musicRect.h) {
                                 isMusicOn = !isMusicOn;
@@ -223,12 +245,25 @@ int main(int argv, char** args) {
                             }
                         }
                         if (e.button.button == SDL_BUTTON_LEFT &&
-                            (mouseX > 288/2-104/2 && mouseX < 288/2-104/2+104) &&
-                            (mouseY > 512-90-130+30 && mouseY < 512-90-130+30+58) &&
                             player.isDead() == DEAD && MuchPain.getCount() > 30 + playerScore.getScore() * 3) {
-                            check = true;
-                            a = MuchPain.getCount();
+                            SDL_Rect restartRect = {static_cast<int>(restartButton.getX()), static_cast<int>(restartButton.getY()), restartButton.getWidth(), restartButton.getHeight()};
+                            if (mouseX >= restartRect.x && mouseX <= restartRect.x + restartRect.w &&
+                                mouseY >= restartRect.y && mouseY <= restartRect.y + restartRect.h) {
+                                check = true;
+                                a = MuchPain.getCount();
+                            }
                         }
+                    }
+                }
+                if (e.type == SDL_MOUSEMOTION && player.isDead() == DEAD && MuchPain.getCount() > 30 + playerScore.getScore() * 3) {
+                    int mouseX = 0, mouseY = 0;
+                    SDL_GetMouseState(&mouseX, &mouseY);
+                    SDL_Rect restartRect = {static_cast<int>(restartButton.getX()), static_cast<int>(restartButton.getY()), restartButton.getWidth(), restartButton.getHeight()};
+                    if (mouseX >= restartRect.x && mouseX <= restartRect.x + restartRect.w &&
+                        mouseY >= restartRect.y && mouseY <= restartRect.y + restartRect.h) {
+                        isRestartHovered = true;
+                    } else {
+                        isRestartHovered = false;
                     }
                 }
             }
@@ -331,7 +366,7 @@ int main(int argv, char** args) {
                     }
                     if (player.getY() == 512 - 90 - (float)player.getWidth() + 6) {
                         if (MuchPain.getCount() > 30 + playerScore.getScore() * 3) {
-                            window.render(288/2 - 104/2, 512 - 90 - 130 + 30, things[5]);
+                            window.render(restartButton.getX(), restartButton.getY(), isRestartHovered ? things[6] : things[5]);
                         }
                         window.renderScoreBoard(ScoreBoard);
                         window.renderMuchPain(MuchPain);
@@ -351,7 +386,7 @@ int main(int argv, char** args) {
             if (lives == 0) lives = 3;
             reset();
         }
-        SDL_Delay(21);
+        SDL_Delay(16.5);
     }
     any.cleanAudio();
     Mix_FreeMusic(bgMusic1);

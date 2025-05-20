@@ -1,10 +1,12 @@
 #include "Bird.hpp"
+#include <SDL_mixer.h> // Added for Mix_PlayChannel
 
-Bird::Bird(float _x, float _y, std::vector<SDL_Texture*> _tex)
+Bird::Bird(float _x, float _y, std::vector<SDL_Texture*> _tex, int _colorIndex)
 {
     x = _x;
     y = _y;
     tex = _tex;
+    colorIndex = _colorIndex;
     currentFrame.x = 0;
     currentFrame.y = 0;
     SDL_QueryTexture(_tex[0], NULL, NULL, &currentFrame.w, &currentFrame.h);
@@ -87,45 +89,45 @@ void Bird::update(Pipe &b1, Pipe &b2, bool mainScreen)
             playerStatus = DEAD;
         }
         auto checkPipeCollision = [this](Pipe& pipe) {
-    bool collisionX = (getTopRightX(angle) > pipe.getX() + 3 || getBottomRightX(angle) > pipe.getX() + 5) &&
-                     (getBottomLeftX(angle) < pipe.getX() + (float)pipe.getWidth() - 5 ||
-                      getTopLeftX(angle) < pipe.getX() + (float)pipe.getWidth() + 5);
+            bool collisionX = (getTopRightX(angle) > pipe.getX() + 3 || getBottomRightX(angle) > pipe.getX() + 5) &&
+                             (getBottomLeftX(angle) < pipe.getX() + (float)pipe.getWidth() - 5 ||
+                              getTopLeftX(angle) < pipe.getX() + (float)pipe.getWidth() + 5);
 
-    if (collisionX)
-    {
-        bool collisionY = (getTopRightY(angle) < pipe.getY() + (float)pipe.getHeight() + 10 ||
-                         getTopRightY(angle) > pipe.getY() + (float)pipe.getHeight() + (float)pipe.getPipeSpace()) ||
-                         (getBottomRightY(angle) < pipe.getY() + (float)pipe.getHeight() ||
-                         getBottomRightY(angle) > pipe.getY() + (float)pipe.getHeight() + (float)pipe.getPipeSpace() - 1);
-
-        if (collisionY)
-        {
-            if (lives > 1 && !invincible)
+            if (collisionX)
             {
-                lives--;
-                std::cout << "Lives remaining: " << lives << std::endl; // Debug output
-                invincible = true;
-                Mix_PlayChannel(-1, hitSfx, 0);
-                pipe.setX(-1000);
-                pipe.setPipeScored(true);
-            }
-            else if (!invincible)
-            {
-                playerStatus = DEAD;
-                std::cout << "Bird is dead!" << std::endl; // Debug output
-            }
-            return true;
-        }
-        else if (playerStatus != DEAD && !pipe.isScored())
-        {
-            Mix_PlayChannel(-1, pointSfx, 0);
-            ActtualScore += 1;
-            pipe.setPipeScored(true);
-        }
-    }
-    return false;
-};
+                bool collisionY = (getTopRightY(angle) < pipe.getY() + (float)pipe.getHeight() + 10 ||
+                                 getTopRightY(angle) > pipe.getY() + (float)pipe.getHeight() + (float)pipe.getPipeSpace()) ||
+                                 (getBottomRightY(angle) < pipe.getY() + (float)pipe.getHeight() ||
+                                 getBottomRightY(angle) > pipe.getY() + (float)pipe.getHeight() + (float)pipe.getPipeSpace() - 1);
 
+                if (collisionY)
+                {
+                    if (lives > 1 && !invincible)
+                    {
+                        lives--;
+                        std::cout << "Lives remaining: " << lives << std::endl;
+                        invincible = true;
+                        Mix_PlayChannel(-1, hitSfx, 0);
+                        pipe.setX(-1000);
+                        pipe.setPipeScored(true);
+                    }
+                    else if (!invincible)
+                    {
+                        playerStatus = DEAD;
+                        std::cout << "Bird is dead!" << std::endl;
+                    }
+                    return true;
+                }
+                else if (playerStatus != DEAD && !pipe.isScored())
+                {
+                    Mix_PlayChannel(-1, pointSfx, 0);
+                    ActtualScore += 1;
+                    pipe.setPipeScored(true);
+                    pipe.setScored(ActtualScore);
+                }
+            }
+            return false;
+        };
 
         checkPipeCollision(b1);
         checkPipeCollision(b2);
@@ -147,7 +149,6 @@ void Bird::reset()
     invincibleFrames = 0;
 }
 
-
 int Bird::getActtualScore()
 {
     return ActtualScore;
@@ -158,43 +159,38 @@ bool Bird::checkSplashWhenDie()
 }
 void Bird::setCheckSplash(bool s)
 {
-    SplashWhenDie=s;
+    SplashWhenDie = s;
 }
-
-
 
 float Bird::getTopRightX(float a)
 {
-    return getX()+((float)getWidth())/2*(1+cos(a*PI/180))-((float)getHeight())/2*sin(a*PI/180);
+    return getX() + ((float)getWidth())/2 * (1 + cos(a * PI/180)) - ((float)getHeight())/2 * sin(a * PI/180);
 }
 float Bird::getTopRightY(float a)
 {
-    return getY()-((float)getWidth())/2*sin(a*PI/180)+(float)getHeight()/2-((float)getHeight())/2*cos(a*PI/180);
+    return getY() - ((float)getWidth())/2 * sin(a * PI/180) + (float)getHeight()/2 - ((float)getHeight())/2 * cos(a * PI/180);
 }
 float Bird::getBottomRightX(float a)
 {
-    return getX()+((float)getWidth())/2*(1+cos(a*PI/180))+((float)getHeight())/2*sin(a*PI/180);
+    return getX() + ((float)getWidth())/2 * (1 + cos(a * PI/180)) + ((float)getHeight())/2 * sin(a * PI/180);
 }
 float Bird::getBottomRightY(float a)
 {
-    return getY()-((float)getWidth())/2*sin(a*PI/180)+(float)getHeight()/2+((float)getHeight())/2*cos(a*PI/180);
+    return getY() - ((float)getWidth())/2 * sin(a * PI/180) + (float)getHeight()/2 + ((float)getHeight())/2 * cos(a * PI/180);
 }
 float Bird::getBottomLeftX(float a)
 {
-    return getTopRightX(a)-((float)getWidth())*cos(a*PI/180)+((float)getHeight())*sin(a*PI/180);
+    return getTopRightX(a) - ((float)getWidth()) * cos(a * PI/180) + ((float)getHeight()) * sin(a * PI/180);
 }
 float Bird::getBottomLeftY(float a)
 {
-    return getBottomRightY(a)+((float)getHeight())*sin(a*PI/180);
+    return getBottomRightY(a) + ((float)getHeight()) * sin(a * PI/180);
 }
 float Bird::getTopLeftX(float a)
 {
-    return getTopRightX(a)-((float)getWidth())*sin(a*PI/180);
+    return getTopRightX(a) - ((float)getWidth()) * sin(a * PI/180);
 }
 float Bird::getTopLeftY(float a)
 {
-    return getBottomLeftY(a)-((float)getHeight())*cos(a*PI/180);
+    return getBottomLeftY(a) - ((float)getHeight()) * cos(a * PI/180);
 }
-
-
-

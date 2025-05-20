@@ -2,29 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="source\menu.hpp" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="source\menu.cpp" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="762" topLine="3" />
+			<Cursor1 position="2781" topLine="54" />
 		</Cursor>
 	</File>
-	<File name="source\Score.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="source\RenderWindow.hpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="19" topLine="18" />
-		</Cursor>
-	</File>
-	<File name="source\background.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="313" topLine="42" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="11939" topLine="264" />
-		</Cursor>
-	</File>
-	<File name="source\Bird.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5575" topLine="162" />
+			<Cursor1 position="1248" topLine="12" />
 		</Cursor>
 	</File>
 	<File name="source\Background.hpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -32,29 +17,24 @@
 			<Cursor1 position="306" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="source\AnyThing.hpp" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="source\Bird.hpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="988" topLine="7" />
-		</Cursor>
-	</File>
-	<File name="source\RenderWindow.hpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="463" topLine="0" />
+			<Cursor1 position="1851" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="source\renderwindow.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="888" topLine="9" />
+			<Cursor1 position="3097" topLine="75" />
 		</Cursor>
 	</File>
-	<File name="source\Bird.hpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="source\Score.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1224" topLine="38" />
+			<Cursor1 position="19" topLine="3" />
 		</Cursor>
 	</File>
 	<File name="source\Pipe.hpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="785" topLine="17" />
+			<Cursor1 position="2021" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="source\anything.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
@@ -62,19 +42,39 @@
 			<Cursor1 position="1762" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="source\Score.hpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="source\menu.hpp" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="781" topLine="1" />
-		</Cursor>
-	</File>
-	<File name="source\menu.cpp" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="54" />
+			<Cursor1 position="764" topLine="4" />
 		</Cursor>
 	</File>
 	<File name="source\Pipe.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2575" topLine="120" />
+			<Cursor1 position="829" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="source\Bird.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4306" topLine="83" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="17508" topLine="374" />
+		</Cursor>
+	</File>
+	<File name="source\Score.hpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="781" topLine="4" />
+		</Cursor>
+	</File>
+	<File name="source\background.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="313" topLine="42" />
+		</Cursor>
+	</File>
+	<File name="source\AnyThing.hpp" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="988" topLine="19" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
