@@ -32,4 +32,3 @@ public:
 
 #endif // BACKGROUND_HPP_INCLUDED
 
-

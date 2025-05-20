@@ -3,7 +3,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_mixer.h> // Added for Mix_Chunk
+#include <SDL_mixer.h>
 #include <vector>
 #include "Pipe.hpp"
 

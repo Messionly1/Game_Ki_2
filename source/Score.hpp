@@ -38,4 +38,3 @@ public:
 };
 
 #endif // SCORE_HPP_INCLUDED
-

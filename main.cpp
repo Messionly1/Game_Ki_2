@@ -254,9 +254,8 @@ int main(int argv, char** args) {
                     }
                 }
                 window.render(0, 0, things[11]);
-                // Hiển thị 3 điểm số cao nhất trên các bục
                 for (int i = 0; i < highScores.size(); ++i) {
-                    std::string scoreText = std::to_string(highScores[i]); // Chỉ hiển thị điểm số
+                    std::string scoreText = std::to_string(highScores[i]);
                     SDL_Surface* textSurface = TTF_RenderText_Solid(flappyFont, scoreText.c_str(), textColor);
                     if (textSurface) {
                         SDL_Texture* textTexture = SDL_CreateTextureFromSurface(window.getRenderer(), textSurface);
@@ -264,15 +263,15 @@ int main(int argv, char** args) {
                             int textW, textH;
                             SDL_QueryTexture(textTexture, nullptr, nullptr, &textW, &textH);
                             int x, y;
-                            if (i == 0) { // Bục số 1 (giữa, cao nhất)
+                            if (i == 0) {
                                 x = 144 - textW / 2;
-                                y = 170; // Cao hơn một chút
-                            } else if (i == 1) { // Bục số 2 (bên trái)
+                                y = 170;
+                            } else if (i == 1) {
                                 x = 55 - textW / 2;
-                                y = 200; // Cao hơn một chút
-                            } else { // Bục số 3 (bên phải)
+                                y = 200;
+                            } else {
                                 x = 225 - textW / 2;
-                                y = 230; // Cao hơn một chút
+                                y = 230;
                             }
                             window.render(x, y, textTexture);
                             SDL_DestroyTexture(textTexture);
@@ -336,9 +335,9 @@ int main(int argv, char** args) {
             settingsMenu.render(window);
         } else if (state == RANKING) {
             window.render(0, 0, things[11]);
-            // Hiển thị 3 điểm số cao nhất trên các bục
+
             for (int i = 0; i < highScores.size(); ++i) {
-                std::string scoreText = std::to_string(highScores[i]); // Chỉ hiển thị điểm số
+                std::string scoreText = std::to_string(highScores[i]);
                 SDL_Surface* textSurface = TTF_RenderText_Solid(flappyFont, scoreText.c_str(), textColor);
                 if (textSurface) {
                     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(window.getRenderer(), textSurface);
@@ -346,15 +345,15 @@ int main(int argv, char** args) {
                         int textW, textH;
                         SDL_QueryTexture(textTexture, nullptr, nullptr, &textW, &textH);
                         int x, y;
-                        if (i == 0) { // Bục số 1 (giữa, cao nhất)
+                        if (i == 0) {
                             x = 144 - textW / 2;
-                            y = 170; // Cao hơn một chút
-                        } else if (i == 1) { // Bục số 2 (bên trái)
+                            y = 170;
+                        } else if (i == 1) {
                             x = 55 - textW / 2;
-                            y = 200; // Cao hơn một chút
-                        } else { // Bục số 3 (bên phải)
+                            y = 200;
+                        } else {
                             x = 225 - textW / 2;
-                            y = 230; // Cao hơn một chút
+                            y = 230;
                         }
                         window.render(x, y, textTexture);
                         SDL_DestroyTexture(textTexture);

@@ -1,5 +1,5 @@
 #include "Bird.hpp"
-#include <SDL_mixer.h> // Added for Mix_PlayChannel
+#include <SDL_mixer.h>
 
 Bird::Bird(float _x, float _y, std::vector<SDL_Texture*> _tex, int _colorIndex)
 {
