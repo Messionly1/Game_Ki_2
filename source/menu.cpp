@@ -22,7 +22,7 @@ Menu::Menu(SDL_Texture* bgTex, const std::vector<SDL_Texture*>& btnTextures) {
 
         // Center buttons horizontally, stack vertically starting at y=150
         dstRect.x = 288 / 2 - srcRect.w / 2;
-        dstRect.y = 150 + i * (srcRect.h + 30); // Adjust spacing for your design
+        dstRect.y = 150 + i * (srcRect.h + 20); // Giảm khoảng cách giữa các nút để bố cục đẹp hơn
         dstRect.w = srcRect.w;
         dstRect.h = srcRect.h;
 

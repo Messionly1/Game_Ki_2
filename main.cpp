@@ -8,11 +8,13 @@
 #include "source/Menu.hpp"
 #include <vector>
 #include <random>
+#include <algorithm>
 
 using namespace std;
 int lives = 3;
+std::vector<int> highScores = {0, 0, 0};
 
-enum GameState { MAIN_MENU, SETTINGS_MENU, GAME };
+enum GameState { MAIN_MENU, SETTINGS_MENU, GAME, RANKING };
 GameState state = MAIN_MENU;
 
 void gameLoop();
@@ -78,10 +80,19 @@ bool init() {
     things.push_back(window.loadTexture("asset/Fb2ndPlayButton.png"));
     things.push_back(window.loadTexture("asset/BlendBg.png"));
     things.push_back(window.loadTexture("asset/medal.png"));
+    things.push_back(window.loadTexture("asset/FbRankButton.png"));
+    things.push_back(window.loadTexture("asset/FbRank2ndButton.png"));
+    SDL_Texture* rankingTexture = window.loadTexture("asset/ranking.png");
+    if (!rankingTexture) {
+        std::cout << "Failed to load ranking.png: " << SDL_GetError() << std::endl;
+        rankingTexture = things[0];
+    }
+    things.push_back(rankingTexture);
 
     menuButtons.push_back(window.loadTexture("asset/buttonPlay.png"));
     menuButtons.push_back(window.loadTexture("asset/buttonSetting.png"));
     menuButtons.push_back(window.loadTexture("asset/buttonQuit.png"));
+    menuButtons.push_back(window.loadTexture("asset/FbRankButton.png"));
 
     settingsButtons.push_back(window.loadTexture("asset/level1.png"));
     settingsButtons.push_back(window.loadTexture("asset/level2.png"));
@@ -146,6 +157,12 @@ bool pipe1Scored = false;
 bool pipe2Scored = false;
 
 void reset() {
+    highScores.push_back(playerScore.getCountingScore());
+    std::sort(highScores.begin(), highScores.end(), std::greater<int>());
+    if (highScores.size() > 3) {
+        highScores.resize(3);
+    }
+
     int newColorIndex = dis(gen);
     player = Bird(50, 512/2-18, getBirdTextures(newColorIndex), newColorIndex);
     pipe1.reset(pipe1, pipe2);
@@ -197,6 +214,9 @@ int main(int argv, char** args) {
                         settingsMenu.setMenuActive(true);
                     } else if (selected == 2) {
                         isRunning = false;
+                    } else if (selected == 3) {
+                        state = RANKING;
+                        mainMenu.setMenuActive(true);
                     }
                 }
             } else if (state == SETTINGS_MENU) {
@@ -220,6 +240,47 @@ int main(int argv, char** args) {
                     settingsMenu.setMenuActive(true);
                     mainMenu.setMenuActive(true);
                 }
+            } else if (state == RANKING) {
+                int mouseX, mouseY;
+                SDL_GetMouseState(&mouseX, &mouseY);
+                bool isRankButtonHovered = false;
+                SDL_Rect rankButtonRect = {288/2 - 104/2, 512 - 90 - 130 + 90, 104, 40};
+                if (mouseX >= rankButtonRect.x && mouseX <= rankButtonRect.x + rankButtonRect.w &&
+                    mouseY >= rankButtonRect.y && mouseY <= rankButtonRect.y + rankButtonRect.h) {
+                    isRankButtonHovered = true;
+                    if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
+                        state = MAIN_MENU;
+                        mainMenu.setMenuActive(true);
+                    }
+                }
+                window.render(0, 0, things[11]);
+                // Hiển thị 3 điểm số cao nhất trên các bục
+                for (int i = 0; i < highScores.size(); ++i) {
+                    std::string scoreText = std::to_string(highScores[i]); // Chỉ hiển thị điểm số
+                    SDL_Surface* textSurface = TTF_RenderText_Solid(flappyFont, scoreText.c_str(), textColor);
+                    if (textSurface) {
+                        SDL_Texture* textTexture = SDL_CreateTextureFromSurface(window.getRenderer(), textSurface);
+                        if (textTexture) {
+                            int textW, textH;
+                            SDL_QueryTexture(textTexture, nullptr, nullptr, &textW, &textH);
+                            int x, y;
+                            if (i == 0) { // Bục số 1 (giữa, cao nhất)
+                                x = 144 - textW / 2;
+                                y = 170; // Cao hơn một chút
+                            } else if (i == 1) { // Bục số 2 (bên trái)
+                                x = 55 - textW / 2;
+                                y = 200; // Cao hơn một chút
+                            } else { // Bục số 3 (bên phải)
+                                x = 225 - textW / 2;
+                                y = 230; // Cao hơn một chút
+                            }
+                            window.render(x, y, textTexture);
+                            SDL_DestroyTexture(textTexture);
+                        }
+                        SDL_FreeSurface(textSurface);
+                    }
+                }
+                window.render(rankButtonRect.x, rankButtonRect.y, isRankButtonHovered ? things[10] : things[9]);
             } else {
                 if (e.type == SDL_MOUSEBUTTONDOWN) {
                     int mouseX = 0, mouseY = 0;
@@ -273,6 +334,43 @@ int main(int argv, char** args) {
             mainMenu.render(window);
         } else if (state == SETTINGS_MENU) {
             settingsMenu.render(window);
+        } else if (state == RANKING) {
+            window.render(0, 0, things[11]);
+            // Hiển thị 3 điểm số cao nhất trên các bục
+            for (int i = 0; i < highScores.size(); ++i) {
+                std::string scoreText = std::to_string(highScores[i]); // Chỉ hiển thị điểm số
+                SDL_Surface* textSurface = TTF_RenderText_Solid(flappyFont, scoreText.c_str(), textColor);
+                if (textSurface) {
+                    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(window.getRenderer(), textSurface);
+                    if (textTexture) {
+                        int textW, textH;
+                        SDL_QueryTexture(textTexture, nullptr, nullptr, &textW, &textH);
+                        int x, y;
+                        if (i == 0) { // Bục số 1 (giữa, cao nhất)
+                            x = 144 - textW / 2;
+                            y = 170; // Cao hơn một chút
+                        } else if (i == 1) { // Bục số 2 (bên trái)
+                            x = 55 - textW / 2;
+                            y = 200; // Cao hơn một chút
+                        } else { // Bục số 3 (bên phải)
+                            x = 225 - textW / 2;
+                            y = 230; // Cao hơn một chút
+                        }
+                        window.render(x, y, textTexture);
+                        SDL_DestroyTexture(textTexture);
+                    }
+                    SDL_FreeSurface(textSurface);
+                }
+            }
+            SDL_Rect rankButtonRect = {288/2 - 104/2, 512 - 90 - 130 + 90, 104, 40};
+            bool isRankButtonHovered = false;
+            int mouseX, mouseY;
+            SDL_GetMouseState(&mouseX, &mouseY);
+            if (mouseX >= rankButtonRect.x && mouseX <= rankButtonRect.x + rankButtonRect.w &&
+                mouseY >= rankButtonRect.y && mouseY <= rankButtonRect.y + rankButtonRect.h) {
+                isRankButtonHovered = true;
+            }
+            window.render(rankButtonRect.x, rankButtonRect.y, isRankButtonHovered ? things[10] : things[9]);
         } else {
             if (mainScreen) {
                 if (!swooshSFx) {

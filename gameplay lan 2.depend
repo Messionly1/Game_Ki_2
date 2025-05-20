@@ -184,7 +184,7 @@
 	<string>
 	<iostream>
 
-1747708070 source:c:\users\legion\onedrive\desktop\tri_game\main.cpp
+1747727626 source:c:\users\legion\onedrive\desktop\tri_game\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -195,8 +195,9 @@
 	"source/Menu.hpp"
 	<vector>
 	<random>
+	<algorithm>
 
-1747707406 c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.hpp
+1747724630 c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -224,7 +225,7 @@
 	<random>
 	"Score.hpp"
 
-1747156283 c:\users\legion\onedrive\desktop\tri_game\source\score.hpp
+1747711287 c:\users\legion\onedrive\desktop\tri_game\source\score.hpp
 	<SDL.h>
 	<SDL_image.h>
 	<string>
@@ -260,17 +261,17 @@
 1747708986 source:c:\users\legion\onedrive\desktop\tri_game\source\pipe.cpp
 	"Pipe.hpp"
 
-1747708986 source:c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.cpp
+1747724619 source:c:\users\legion\onedrive\desktop\tri_game\source\renderwindow.cpp
 	"RenderWindow.hpp"
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	<iostream>
 
-1747360767 source:c:\users\legion\onedrive\desktop\tri_game\source\score.cpp
+1747711287 source:c:\users\legion\onedrive\desktop\tri_game\source\score.cpp
 	"Score.hpp"
 
-1747669172 source:c:\users\legion\onedrive\desktop\tri_game\source\menu.cpp
+1747710177 source:c:\users\legion\onedrive\desktop\tri_game\source\menu.cpp
 	"Menu.hpp"
 	<iostream>
 
