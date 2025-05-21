@@ -156,8 +156,8 @@ void Pipe::reset(Pipe& p1, Pipe& p2) {
     p1.setRandomSize(randomSize);
     p2.setRandomSize(randomSize);
 
-    p1.setMoveDirection((rand() % 100 < 70) ? -1 : 1);
-    p2.setMoveDirection((rand() % 100 < 70) ? -1 : 1);
+    p1.setMoveDirection((rand() % 100 < 100) ? -1 : 1);
+    p2.setMoveDirection((rand() % 100 < 100) ? -1 : 1);
 }
 
 bool Pipe::isScored() {

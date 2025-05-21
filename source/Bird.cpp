@@ -34,8 +34,8 @@ void Bird::setAngle(float _angle) { angle = _angle; }
 
 void Bird::jump()
 {
-    velocity = -9;
-    angle = -30;
+    velocity = -8;
+    angle = -25;
 }
 
 void Bird::update(Pipe &b1, Pipe &b2, bool mainScreen)
@@ -66,7 +66,7 @@ void Bird::update(Pipe &b1, Pipe &b2, bool mainScreen)
         {
             if (getAngle() < 90)
             {
-                if (getAngle() >= -30 && getAngle() < -27)
+                if (getAngle() >= -25 && getAngle() < -22)
                     setAngle(getAngle() + 0.55);
                 else
                     setAngle(getAngle() + 8.35);
@@ -105,7 +105,7 @@ void Bird::update(Pipe &b1, Pipe &b2, bool mainScreen)
                     if (lives > 1 && !invincible)
                     {
                         lives--;
-                        std::cout << "Lives remaining: " << lives << std::endl;
+
                         invincible = true;
                         Mix_PlayChannel(-1, hitSfx, 0);
                         pipe.setX(-1000);
@@ -114,7 +114,8 @@ void Bird::update(Pipe &b1, Pipe &b2, bool mainScreen)
                     else if (!invincible)
                     {
                         playerStatus = DEAD;
-                        std::cout << "Bird is dead!" << std::endl;
+
+
                     }
                     return true;
                 }

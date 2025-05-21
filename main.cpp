@@ -198,7 +198,6 @@ int main(int argv, char** args) {
             if (e.type == SDL_QUIT) {
                 isRunning = false;
             }
-
             if (state == MAIN_MENU) {
                 mainMenu.update(e);
                 if (!mainMenu.isMenuActive()) {
@@ -223,7 +222,7 @@ int main(int argv, char** args) {
                 settingsMenu.update(e);
                 if (!settingsMenu.isMenuActive()) {
                     int selected = settingsMenu.getSelectedButton();
-                    if (selected == 0) {
+                    if (selected == 0) { // Play
                         Mix_HaltMusic();
                         currentMusic = bgMusic1;
                         if (isMusicOn) Mix_PlayMusic(currentMusic, -1);
@@ -253,7 +252,7 @@ int main(int argv, char** args) {
                         mainMenu.setMenuActive(true);
                     }
                 }
-                window.render(0, 0, things[11]);
+                window.render(0, 0, things[11]); //ranking
                 for (int i = 0; i < highScores.size(); ++i) {
                     std::string scoreText = std::to_string(highScores[i]);
                     SDL_Surface* textSurface = TTF_RenderText_Solid(flappyFont, scoreText.c_str(), textColor);
@@ -453,12 +452,12 @@ int main(int argv, char** args) {
                             }
                         }
                         if (lives > 0) {
-                            SDL_Delay(50);
+                            SDL_Delay(40);
                             continue;
                         }
                         window.render(0, 0, things[1]);
                         window.display();
-                        SDL_Delay(60);
+                        SDL_Delay(50);
                         continue;
                     }
                     if (player.getY() == 512 - 90 - (float)player.getWidth() + 6) {

@@ -83,6 +83,10 @@ Các điểm nổi bật khác:
 
 - Quản lí các đối tượng bằng vector
 
+- Moving_Pipe / Random_Size
+
+- Counting Score
+
 - Button hovering
 
 - Camera scrolling
@@ -92,6 +96,9 @@ Các điểm nổi bật khác:
 - Medal
 
 - Hệ thống đếm điểm
+
+- Bộ sinh số ngẫu nhiên.
+
 
 
 

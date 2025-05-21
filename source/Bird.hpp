@@ -8,7 +8,7 @@
 #include "Pipe.hpp"
 
 #define PI 3.14159265359
-#define GRAVITY 0.5
+#define GRAVITY 0.55
 #define DEAD 1
 #define ALIVE 0
 #define LIVE_CAP 3
